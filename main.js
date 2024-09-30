@@ -1,10 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const languageOptions = document.querySelectorAll('input[name="language"]');
     const genreOptions = document.querySelectorAll('.genre-option');
     const bookTypeOptions = document.querySelectorAll('.book-type-option');
     const startButton = document.getElementById('start-button');
     
+    let selectedLanguage = 'en';
     let selectedGenre = '';
     let selectedBookType = '';
+
+    languageOptions.forEach(option => {
+        option.addEventListener('change', () => {
+            selectedLanguage = option.value;
+            checkSelection();
+        });
+    });
 
     genreOptions.forEach(option => {
         option.addEventListener('click', () => {
@@ -25,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function checkSelection() {
-        if (selectedGenre && selectedBookType) {
+        if (selectedLanguage && selectedGenre && selectedBookType) {
             startButton.disabled = false;
         } else {
             startButton.disabled = true;
@@ -33,8 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     startButton.addEventListener('click', () => {
-        if (selectedGenre && selectedBookType) {
+        if (selectedLanguage && selectedGenre && selectedBookType) {
             const storyInfo = {
+                language: selectedLanguage,
                 genre: selectedGenre,
                 bookType: selectedBookType
             };

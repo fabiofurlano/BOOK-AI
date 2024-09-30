@@ -1,24 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Writing Workspace loaded');
 
-    // Load story information
     loadStoryInfo();
-
-    // Load characters and plots
     loadCharacters();
     loadPlots();
-
-    // Load AI information
     loadAIInfo();
-
-    // Set up event listeners
     setupEventListeners();
-
-    // Update progress bar
     updateProgressBar();
-
-    // Load saved story content
     loadStoryContent();
+    loadChapters();
 });
 
 function loadStoryInfo() {
@@ -38,35 +28,27 @@ function loadStoryInfo() {
 function loadCharacters() {
     const characters = JSON.parse(localStorage.getItem('characters') || '[]');
     const charactersList = document.getElementById('characters-list');
-    charactersList.innerHTML = ''; // Clear existing content
-    if (characters.length > 0) {
-        characters.forEach(character => {
-            const characterElement = document.createElement('div');
-            characterElement.className = 'mb-2 p-2 bg-indigo-100 rounded-lg';
-            characterElement.textContent = `${character.name} (${character.role})`;
-            characterElement.title = `${character.description}\nMotivation: ${character.motivation}`;
-            charactersList.appendChild(characterElement);
-        });
-    } else {
-        charactersList.innerHTML = '<p>No characters created yet.</p>';
-    }
+    charactersList.innerHTML = '';
+    characters.forEach(character => {
+        const characterElement = document.createElement('div');
+        characterElement.className = 'mb-2 p-2 bg-indigo-100 rounded-lg';
+        characterElement.textContent = `${character.name} (${character.role})`;
+        characterElement.title = `${character.description}\nMotivation: ${character.motivation}`;
+        charactersList.appendChild(characterElement);
+    });
 }
 
 function loadPlots() {
     const plots = JSON.parse(localStorage.getItem('plots') || '[]');
     const plotsList = document.getElementById('plots-list');
-    plotsList.innerHTML = ''; // Clear existing content
-    if (plots.length > 0) {
-        plots.forEach(plot => {
-            const plotElement = document.createElement('div');
-            plotElement.className = 'mb-2 p-2 bg-indigo-100 rounded-lg';
-            plotElement.textContent = plot.summary;
-            plotElement.title = `Key Events: ${plot.keyEvents}`;
-            plotsList.appendChild(plotElement);
-        });
-    } else {
-        plotsList.innerHTML = '<p>No plots created yet.</p>';
-    }
+    plotsList.innerHTML = '';
+    plots.forEach(plot => {
+        const plotElement = document.createElement('div');
+        plotElement.className = 'mb-2 p-2 bg-indigo-100 rounded-lg';
+        plotElement.textContent = plot.summary;
+        plotElement.title = `Key Events: ${plot.keyEvents}`;
+        plotsList.appendChild(plotElement);
+    });
 }
 
 function loadAIInfo() {
@@ -85,6 +67,7 @@ function setupEventListeners() {
     const wordCount = document.getElementById('word-count');
     const saveStoryButton = document.getElementById('save-story');
     const aiAssistButton = document.getElementById('ai-assist');
+    const createChapterButton = document.getElementById('create-chapter');
 
     storyContent.addEventListener('input', () => {
         const words = storyContent.value.trim().split(/\s+/).length;
@@ -93,6 +76,7 @@ function setupEventListeners() {
 
     saveStoryButton.addEventListener('click', saveStory);
     aiAssistButton.addEventListener('click', getAIAssistance);
+    createChapterButton.addEventListener('click', createNewChapter);
 }
 
 function saveStory() {
@@ -111,6 +95,86 @@ function loadStoryContent() {
     }
 }
 
+function createNewChapter() {
+    const chaptersContainer = document.getElementById('chapters-container');
+    const chapterCount = chaptersContainer.children.length + 1;
+    const chapterElement = document.createElement('div');
+    chapterElement.className = 'mb-4 p-4 bg-gray-100 rounded-lg';
+    chapterElement.innerHTML = `
+        <h3 class="text-xl font-semibold mb-2">Chapter ${chapterCount}</h3>
+        <textarea class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400" rows="10" placeholder="Write your chapter content here..."></textarea>
+        <button class="generate-chapter-ai mt-2 bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 transition duration-300 ease-in-out">Generate with AI</button>
+    `;
+    chaptersContainer.appendChild(chapterElement);
+
+    const generateChapterButton = chapterElement.querySelector('.generate-chapter-ai');
+    generateChapterButton.addEventListener('click', () => generateChapterWithAI(chapterCount));
+
+    saveChapters();
+}
+
+function loadChapters() {
+    const chapters = JSON.parse(localStorage.getItem('chapters') || '[]');
+    const chaptersContainer = document.getElementById('chapters-container');
+    chaptersContainer.innerHTML = '';
+    chapters.forEach((chapterContent, index) => {
+        const chapterElement = document.createElement('div');
+        chapterElement.className = 'mb-4 p-4 bg-gray-100 rounded-lg';
+        chapterElement.innerHTML = `
+            <h3 class="text-xl font-semibold mb-2">Chapter ${index + 1}</h3>
+            <textarea class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400" rows="10">${chapterContent}</textarea>
+            <button class="generate-chapter-ai mt-2 bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 transition duration-300 ease-in-out">Generate with AI</button>
+        `;
+        chaptersContainer.appendChild(chapterElement);
+
+        const generateChapterButton = chapterElement.querySelector('.generate-chapter-ai');
+        generateChapterButton.addEventListener('click', () => generateChapterWithAI(index + 1));
+    });
+}
+
+function saveChapters() {
+    const chaptersContainer = document.getElementById('chapters-container');
+    const chapters = Array.from(chaptersContainer.children).map(chapterElement => {
+        return chapterElement.querySelector('textarea').value;
+    });
+    localStorage.setItem('chapters', JSON.stringify(chapters));
+}
+
+async function generateChapterWithAI(chapterNumber) {
+    const apiKey = localStorage.getItem("openRouterApiKey");
+    const selectedModel = localStorage.getItem("selectedModel") || "openai/gpt-3.5-turbo";
+    const chapterTextarea = document.querySelector(`#chapters-container div:nth-child(${chapterNumber}) textarea`);
+    const chapterContent = chapterTextarea.value;
+
+    if (!apiKey) {
+        showError("Please save a valid API key in the settings page.");
+        return;
+    }
+
+    showLoading(true);
+
+    try {
+        const storyInfo = JSON.parse(localStorage.getItem('storyInfo') || '{}');
+        const characters = JSON.parse(localStorage.getItem('characters') || '[]');
+        const plots = JSON.parse(localStorage.getItem('plots') || '[]');
+
+        const generatedContent = await generateAIAssistance(apiKey, selectedModel, chapterContent, chapterNumber, storyInfo, characters, plots);
+        chapterTextarea.value += "\n\n" + generatedContent;
+        showSuccess('AI-generated content added to the chapter!');
+        
+        const currentTokens = parseInt(localStorage.getItem('tokenCount') || '0');
+        const newTokens = currentTokens + Math.ceil(generatedContent.length / 4);
+        localStorage.setItem('tokenCount', newTokens.toString());
+        loadAIInfo();
+        saveChapters();
+    } catch (error) {
+        console.error("Error generating chapter content:", error);
+        showError(`Error generating chapter content: ${error.message}`);
+    } finally {
+        showLoading(false);
+    }
+}
+
 async function getAIAssistance() {
     const apiKey = localStorage.getItem("openRouterApiKey");
     const selectedModel = localStorage.getItem("selectedModel") || "openai/gpt-3.5-turbo";
@@ -124,15 +188,18 @@ async function getAIAssistance() {
     showLoading(true);
 
     try {
-        const assistance = await generateAIAssistance(apiKey, selectedModel, storyContent);
+        const storyInfo = JSON.parse(localStorage.getItem('storyInfo') || '{}');
+        const characters = JSON.parse(localStorage.getItem('characters') || '[]');
+        const plots = JSON.parse(localStorage.getItem('plots') || '[]');
+
+        const assistance = await generateAIAssistance(apiKey, selectedModel, storyContent, null, storyInfo, characters, plots);
         document.getElementById('story-content').value += "\n\n" + assistance;
         showSuccess('AI assistance added to your story!');
         
-        // Update token count (this is an estimate, adjust as needed)
         const currentTokens = parseInt(localStorage.getItem('tokenCount') || '0');
-        const newTokens = currentTokens + Math.ceil(assistance.length / 4); // Rough estimate
+        const newTokens = currentTokens + Math.ceil(assistance.length / 4);
         localStorage.setItem('tokenCount', newTokens.toString());
-        loadAIInfo(); // Reload AI info to update token count
+        loadAIInfo();
     } catch (error) {
         console.error("Error getting AI assistance:", error);
         showError(`Error getting AI assistance: ${error.message}`);
@@ -141,7 +208,7 @@ async function getAIAssistance() {
     }
 }
 
-async function generateAIAssistance(apiKey, model, storyContent) {
+async function generateAIAssistance(apiKey, model, content, chapterNumber, storyInfo, characters, plots) {
     const apiUrl = "https://openrouter.ai/api/v1/chat/completions";
     const headers = {
         Authorization: `Bearer ${apiKey}`,
@@ -149,11 +216,44 @@ async function generateAIAssistance(apiKey, model, storyContent) {
         "HTTP-Referer": window.location.href,
         "X-Title": "Novel-Building Assistant"
     };
+
+    let prompt = `You are a creative writing assistant specializing in ${storyInfo.genre} ${storyInfo.bookType}s. `;
+    
+    if (chapterNumber) {
+        prompt += `Write Chapter ${chapterNumber} of the story based on the following information:\n\n`;
+    } else {
+        prompt += `Continue the story based on the following information:\n\n`;
+    }
+
+    prompt += `Genre: ${storyInfo.genre}\n`;
+    prompt += `Book Type: ${storyInfo.bookType}\n\n`;
+
+    prompt += "Characters:\n";
+    characters.forEach(char => {
+        prompt += `- ${char.name} (${char.role}): ${char.description}\n`;
+    });
+    prompt += "\n";
+
+    prompt += "Plot Summary:\n";
+    plots.forEach(plot => {
+        prompt += `${plot.summary}\n`;
+    });
+    prompt += "\n";
+
+    prompt += "Key Events:\n";
+    plots.forEach(plot => {
+        prompt += `${plot.keyEvents}\n`;
+    });
+    prompt += "\n";
+
+    prompt += `Current content:\n${content}\n\n`;
+    prompt += "Please continue the story, developing the characters and advancing the plot. Write approximately 300-500 words.";
+
     const data = {
         model: model,
         messages: [
-            { role: "system", content: "You are a creative writing assistant. Provide a continuation or suggestion for the given story content." },
-            { role: "user", content: `Here's my current story. Please provide a suggestion for the next part:\n\n${storyContent}` }
+            { role: "system", content: "You are a creative writing assistant specializing in novel writing." },
+            { role: "user", content: prompt }
         ]
     };
 
@@ -175,8 +275,8 @@ async function generateAIAssistance(apiKey, model, storyContent) {
 function updateProgressBar() {
     const progressBar = document.getElementById('progress-bar');
     if (progressBar) {
-        const totalSteps = 5; // Adjust this based on the total number of steps in your app
-        const currentStep = 4; // Writing Workspace is the fourth step
+        const totalSteps = 5;
+        const currentStep = 4;
         const progress = (currentStep / totalSteps) * 100;
         progressBar.style.width = `${progress}%`;
     } else {
