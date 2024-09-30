@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Novel-Building Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        gradient: 'gradient 8s linear infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 min-h-screen font-['Poppins'] flex items-center justify-center p-4">
+    <div id="app" class="w-full max-w-4xl bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden">
+        <header class="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-6 animate-gradient">
+            <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Settings</h1>
+        </header>
+        <main class="p-8">
+            <div class="space-y-6">
+                <div>
+                    <label for="api-key-input" class="block text-sm font-medium text-gray-700">OpenRouter API Key</label>
+                    <input type="password" id="api-key-input" name="api-key" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                </div>
+                <div>
+                    <button id="save-api-key" class="w-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
+                        Save API Key
+                    </button>
+                </div>
+                <div id="api-key-status" class="mt-2 text-sm text-gray-600"></div>
+                <div>
+                    <h2 class="text-lg font-semibold mb-2">Select AI Model</h2>
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-2">Model</th>
+                                <th class="px-4 py-2">Context Limit</th>
+                                <th class="px-4 py-2">Prompt Cost</th>
+                                <th class="px-4 py-2">Completion Cost</th>
+                                <th class="px-4 py-2">Select</th>
+                            </tr>
+                        </thead>
+                        <tbody id="model-list">
+                            <!-- Model options will be populated here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="cost-display" class="mt-4 text-sm font-medium text-gray-700"></div>
+                <div>
+                    <button id="test-connection" class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
+                        Test Connection
+                    </button>
+                </div>
+                <div id="connection-status" class="mt-2 text-sm text-gray-600"></div>
+            </div>
+        </main>
+        <footer class="bg-gray-100 p-4 text-center">
+            <a href="index.html" class="text-blue-500 hover:text-blue-700 transition duration-300 ease-in-out">Back to Home</a>
+        </footer>
+    </div>
+    <script src="settings.js"></script>
+</body>
+</html>

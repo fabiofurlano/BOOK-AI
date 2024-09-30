@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Development - Novel-Building Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        gradient: 'gradient 8s linear infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="character-development.js" defer></script>
+</head>
+<body id="character-development" class="bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 min-h-screen font-['Poppins'] flex items-center justify-center p-4">
+    <div id="app" class="w-full max-w-4xl bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden">
+        <header class="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-6 animate-gradient">
+            <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Character Development</h1>
+            <div id="progress-bar" class="mt-4 bg-white bg-opacity-30 h-2 rounded-full"></div>
+        </header>
+        <main class="p-8">
+            <div id="character-form" class="space-y-6">
+                <div>
+                    <label for="character-name" class="block text-sm font-medium text-gray-700">Character Name</label>
+                    <input type="text" id="character-name" name="character-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="role-option cursor-pointer" data-role="protagonist">
+                        <img src="https://via.placeholder.com/150" alt="Protagonist" class="w-full h-32 object-cover rounded-lg">
+                        <p class="mt-2 text-center">Protagonist</p>
+                    </div>
+                    <div class="role-option cursor-pointer" data-role="antagonist">
+                        <img src="https://via.placeholder.com/150" alt="Antagonist" class="w-full h-32 object-cover rounded-lg">
+                        <p class="mt-2 text-center">Antagonist</p>
+                    </div>
+                    <div class="role-option cursor-pointer" data-role="supporting">
+                        <img src="https://via.placeholder.com/150" alt="Supporting Character" class="w-full h-32 object-cover rounded-lg">
+                        <p class="mt-2 text-center">Supporting Character</p>
+                    </div>
+                </div>
+                <div>
+                    <label for="character-description" class="block text-sm font-medium text-gray-700">Character Description</label>
+                    <textarea id="character-description" name="character-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+                </div>
+                <div>
+                    <label for="character-motivation" class="block text-sm font-medium text-gray-700">Character Motivation</label>
+                    <input type="text" id="character-motivation" name="character-motivation" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                </div>
+                <img id="character-image" class="w-full h-64 object-cover rounded-lg mt-4" style="display: none;" alt="Generated character image">
+                <div class="flex space-x-4">
+                    <button id="add-character" class="flex-1 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
+                        Add Character
+                    </button>
+                    <button id="generate-character" class="flex-1 bg-gradient-to-r from-purple-400 to-pink-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
+                        Generate with AI
+                    </button>
+                </div>
+            </div>
+            <div id="character-list" class="mt-8">
+                <h2 class="text-2xl font-semibold mb-4">Your Characters</h2>
+                <ul id="characters" class="space-y-4"></ul>
+            </div>
+            <div class="mt-8">
+                <button id="next-step" class="w-full bg-gradient-to-r from-purple-400 to-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
+                    Next: Plot Development
+                </button>
+            </div>
+        </main>
+        <footer class="bg-gray-100 p-4 text-center text-gray-600">
+            <p>&copy; 2023 Novel-Building Assistant | <a href="settings.html" class="text-blue-500 hover:text-blue-700">Settings</a> | <a href="index.html" class="text-blue-500 hover:text-blue-700">Home</a></p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+Unknown date
+Unknown author
+OAuth PKCE
+Users can connect to OpenRouter in one click using Proof Key for Code Exchange (PKCE). Here's an example, and here's a step-by-step:
+
+Step 1: Send your user to OpenRouter
+Send your user to https://openrouter.ai/auth?callback_url=YOUR_SITE_URL
+
+You can optionally include a code_challenge (random password up to 256 digits) for extra security.
+For maximum security, we recommend also setting code_challenge_method to S256, and then setting code_challenge to the base64 encoding of the sha256 hash of code_verifier, which you will submit in Step 2. More info in Auth0's docs.
+Example URLs
+OAuth without code challenge: https://openrouter.ai/auth?callback_url=YOUR_SITE_URL
+
+With code challenge (Plain method): https://openrouter.ai/auth?callback_url=YOUR_SITE_URL&code_challenge=5f6525766c064480ac25bd493d121377e6b57d2fa52c0245fbbd51e9&code_challenge_method=plain
+
+With code challenge (S256 method, Recommended): https://openrouter.ai/auth?callback_url=YOUR_SITE_URL&code_challenge=17T2L7LU0IJwCoMiyYkRjTGk4b73xzc309jM2t--AfA&code_challenge_method=S256
+
+Step 2: Exchange the code for a user-controlled API key
+Once logged in, they'll be redirected back to your site with a code in the URL. Make an API call (can be frontend or backend) to exchange the code for a user-controlled API key. And that's it for PKCE!
+
+Look for the code query parameter, e.g. ?code=....
+typescript
+
+fetch('https://openrouter.ai/api/v1/auth/keys', {
+  method: 'POST',
+  body: JSON.stringify({
+    code: $CODE_FROM_QUERY_PARAM,
+    code_verifier: $CODE_VERIFIER, // Only needed if you sent a code_challenge in Step 1
+    code_challenge_method: $CODE_CHALLENGE_METHOD, // Only needed if you sent a code_challenge_method in Step 1
+  }),
+});
+
+Step 3: Use the API key
+A fresh API key will be in the result under "key". Store it securely and make OpenAI-style requests (supports streaming as well):
+
+typescript
+Copy
+fetch("https://openrouter.ai/api/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+    "HTTP-Referer": `${YOUR_SITE_URL}`, // Optional, for including your app on openrouter.ai rankings.
+    "X-Title": `${YOUR_SITE_NAME}`, // Optional. Shows in rankings on openrouter.ai.
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "model": "openai/gpt-4o",
+    "messages": [
+      {"role": "system", "content": "You are a helpful assistant."},
+      {"role": "user", "content": "Hello!"},
+
+    ],
+  })
+});
+You can use JavaScript or any server-side framework, like Streamlit. The linked example shows multiple models and file Q&A.
+
+Appendix: Generating code_challenge for S256 code_challenge_method
+In JavaScript, you can use crypto API to generate a code challenge for the S256 method:
+
+typescript
+
+export async function sha256CodeChallenge(input: string) {
+  return crypto.createHash('sha256').update(input).digest('base64url');
+}
+// ...
+
+const generatedCodeChallenge = await sha256CodeChallenge(code_verifier);
+
+// ...
+
+Error Codes
+400 Invalid code_challenge_method: Make sure you're using the same code challenge method in step 1 as in step 2.
+403 Invalid code or code_verifier: Make sure your user is logged in to OpenRouter, and that code_verifier and code_challenge_method are correct.
+405 Method Not Allowed: Make sure you're using POST and HTTPS for your request.
+External Tools
+PKCE Tools
+Online PKCE Generator Tool
+Viewed using Just Read
+
+Report an error

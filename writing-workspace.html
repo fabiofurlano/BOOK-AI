@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Workspace - Novel-Building Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        gradient: 'gradient 8s linear infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="writing-workspace.js" defer></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-100 via-indigo-200 to-indigo-300 min-h-screen font-['Poppins'] flex flex-col">
+    <header class="bg-gradient-to-r from-indigo-300 via-indigo-400 to-indigo-500 p-6 animate-gradient">
+        <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Writing Workspace</h1>
+        <div id="progress-bar" class="mt-4 bg-white bg-opacity-30 h-2 rounded-full"></div>
+    </header>
+    <main class="flex-grow flex p-4">
+        <div class="w-1/4 bg-white bg-opacity-80 backdrop-blur-lg rounded-lg shadow-lg p-4 mr-4 overflow-y-auto">
+            <h2 class="text-2xl font-semibold mb-4">Story Elements</h2>
+            <div id="story-info" class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">Story Information</h3>
+                <!-- Story info will be dynamically added here -->
+            </div>
+            <div id="characters-list" class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">Characters</h3>
+                <!-- Characters will be dynamically added here -->
+            </div>
+            <div id="plots-list" class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">Plots</h3>
+                <!-- Plots will be dynamically added here -->
+            </div>
+            <div id="ai-info" class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">AI Information</h3>
+                <!-- AI info will be dynamically added here -->
+            </div>
+        </div>
+        <div class="flex-grow bg-white bg-opacity-80 backdrop-blur-lg rounded-lg shadow-lg p-4 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-semibold">Write Your Story</h2>
+                <div id="word-count" class="text-gray-600">Words: 0</div>
+            </div>
+            <textarea id="story-content" class="flex-grow p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Start writing your story here..."></textarea>
+            <div class="mt-4 flex justify-between">
+                <button id="save-story" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out">Save Story</button>
+                <button id="ai-assist" class="bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 transition duration-300 ease-in-out">AI Assist</button>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-gray-100 p-4 text-center text-gray-600">
+        <p>&copy; 2023 Novel-Building Assistant | <a href="settings.html" class="text-blue-500 hover:text-blue-700">Settings</a> | <a href="index.html" class="text-blue-500 hover:text-blue-700">Home</a></p>
+    </footer>
+</body>
+</html>

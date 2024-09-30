@@ -1,0 +1,30 @@
+## Novel-Writing App - Change Log
+
+[Previous entries remain unchanged]
+
+**Version 1.9**
+
+- Improved user experience for the Plot Development section:
+  - Reorganized layout in `plot-development.html` for better clarity and usability.
+  - Moved "Generate Plots with AI" button to the top for increased visibility.
+  - Created a separate section for the plot form, improving user understanding.
+  - Enhanced the styling and layout of generated plot options and saved plots.
+- Enhanced functionality in `plot-development.js`:
+  - Renamed `addPlot` to `savePlot` for better clarity.
+  - Added edit functionality for existing plots.
+  - Improved delete functionality with confirmation messages.
+  - Enhanced the display of saved plots with edit and delete options.
+  - Improved the process of choosing a generated plot option.
+- Improved user feedback:
+  - Added success messages for saving, updating, and deleting plots.
+  - Enhanced error handling and messaging.
+  - Added smooth scrolling when choosing a generated plot option.
+- Overall improvements to make the plot development process more intuitive and user-friendly.
+
+**Future Enhancements**
+
+[Previous future enhancements remain unchanged]
+- Implement a plot outline feature to help users structure their story.
+- Add a feature to link characters from the Character Development section to plot events.
+- Implement a word count goal setting and tracking feature for each plot or story.
+- Create a visual timeline representation of plot events.

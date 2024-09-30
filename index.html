@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novel-Building Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        gradient: 'gradient 8s linear infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="main.js" defer></script>
+</head>
+<body class="bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300 min-h-screen font-['Poppins'] flex items-center justify-center">
+    <div class="w-full max-w-4xl bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden">
+        <header class="bg-gradient-to-r from-purple-300 via-purple-400 to-purple-500 p-6 animate-gradient">
+            <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Novel-Building Assistant</h1>
+        </header>
+        <main class="p-8">
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="fantasy">
+                    <img src="https://via.placeholder.com/150" alt="Fantasy" class="w-full h-32 object-cover rounded-lg mb-2">
+                    <p class="text-center font-semibold">Fantasy</p>
+                </div>
+                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="science-fiction">
+                    <img src="https://via.placeholder.com/150" alt="Science Fiction" class="w-full h-32 object-cover rounded-lg mb-2">
+                    <p class="text-center font-semibold">Science Fiction</p>
+                </div>
+                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="mystery">
+                    <img src="https://via.placeholder.com/150" alt="Mystery" class="w-full h-32 object-cover rounded-lg mb-2">
+                    <p class="text-center font-semibold">Mystery</p>
+                </div>
+                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="romance">
+                    <img src="https://via.placeholder.com/150" alt="Romance" class="w-full h-32 object-cover rounded-lg mb-2">
+                    <p class="text-center font-semibold">Romance</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-8 mb-8">
+                <div class="book-type-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-type="novel">
+                    <img src="https://via.placeholder.com/150" alt="Novel" class="w-full h-32 object-cover rounded-lg mb-2">
+                    <p class="text-center font-semibold">Novel</p>
+                </div>
+                <div class="book-type-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-type="novella">
+                    <img src="https://via.placeholder.com/150" alt="Novella" class="w-full h-32 object-cover rounded-lg mb-2">
+                    <p class="text-center font-semibold">Novella</p>
+                </div>
+                <div class="book-type-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-type="short-story">
+                    <img src="https://via.placeholder.com/150" alt="Short Story" class="w-full h-32 object-cover rounded-lg mb-2">
+                    <p class="text-center font-semibold">Short Story</p>
+                </div>
+            </div>
+            <button id="start-button" class="w-full bg-gradient-to-r from-purple-400 to-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out" disabled>
+                Start Building Your Novel
+            </button>
+        </main>
+        <footer class="bg-gray-100 p-4 text-center text-gray-600">
+            <p>&copy; 2023 Novel-Building Assistant | <a href="settings.html" class="text-blue-500 hover:text-blue-700">Settings</a></p>
+        </footer>
+    </div>
+</body>
+</html>

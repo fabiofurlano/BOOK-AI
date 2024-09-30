@@ -1,0 +1,142 @@
+Step 1: Introduction Screen
+Purpose: Guide users through setting up their novel by selecting the genre, book type, and other foundational choices.
+
+UI Components:
+
+Welcome Message: A friendly introduction to the Novel-Building Assistant.
+Genre Selector: A drop-down or button grid for users to choose the genre, with icons or emojis for a visual touch.
+Book Type Options: Allow users to choose between book types (e.g., fiction, non-fiction, custom).
+Progress Bar: A top bar showing how far along they are in the setup process.
+UI Layout:
+
+Top Area: A progress bar showing steps like "Genre Selection," "Writing Style," "Characters," etc.
+Center: Genre selection tiles with icons (or emojis).
+Bottom: "Next" button that becomes enabled once a genre is selected.
+Step 2: Explore Famous Writers and Locations
+Purpose: Help users choose a writing style inspired by famous writers, and set the time/place of the story.
+
+UI Components:
+
+Famous Writer List: A scrollable list of authors relevant to the genre, each with a short bio.
+Location/Time Selector: Cards or carousels with location and time period suggestions (e.g., modern, ancient, futuristic).
+Interactive Prompts: Fun prompts with icons to make the section engaging.
+UI Layout:
+
+Left Panel: Scrollable list of famous authors with portraits.
+Right Panel: Suggestions for story locations/times with clickable icons (e.g., historical era icons).
+Bottom: "Next" button that activates after selection.
+Step 3: Character Development
+Purpose: Allow users to create multidimensional characters.
+
+UI Components:
+
+Character Count Selector: A slider to choose how many main characters.
+Character Cards: Editable cards for each character, including fields for Name, Age, Occupation, Personality, etc. Randomized suggestions based on genre.
+Character Profile Preview: Show a visual or text-based summary of each character as it’s built (could use an avatar generator).
+UI Layout:
+
+Main Area: A grid of cards representing each character. Clicking expands each card for editing.
+Right Side: Preview of character details in a profile-style window or visual summary.
+Step 4: Plot and Outline Development
+Purpose: Help users outline their novel, setting key plot points and structuring chapters.
+
+UI Components:
+
+Chapter Count Selector: A slider to choose the number of chapters.
+Plot Point Suggestions: Suggested key events (editable by the user) in a bullet-point list.
+Interactive Outline: Drag-and-drop interface for arranging plot points or events.
+UI Layout:
+
+Left Panel: Slider for selecting the number of chapters.
+Center: A detailed plot structure where users can input key events (mind map or flowchart interface).
+Right Panel: Predefined plot point suggestions or custom plot creation.
+Step 5: Writing Chapters
+Purpose: Provide an easy-to-use interface for writing chapters, integrating LLM support for creative assistance.
+
+UI Components:
+
+Writing Workspace: Clean text editor with formatting options (bold, italics).
+Plot Reminder: A sidebar showing the current plot point for reference.
+Word Count Tracker: Real-time word count with progress animations (e.g., gamified milestone markers).
+UI Layout:
+
+Main Area: Full-screen writing environment with collapsible sidebar for plot and word count.
+Floating Save/Progress Button: A sticky button for saving or viewing word count and progress.
+Step 6: Fun and Interactive Elements
+Gamified Progress:
+
+Users can unlock achievements and progress animations as they reach milestones (e.g., completing chapters or reaching word count goals).
+Interactive Feedback:
+
+When users finish writing sessions, provide fun feedback (e.g., motivational messages or animations).
+OpenRouter API Key Integration for LLM Features (Claude, ChatGPT)
+Step 1: UI/UX for API Key Integration
+Settings/Integration Menu:
+
+Add a section in settings labeled "Connect to OpenRouter for AI Assistance."
+Description: "Integrate OpenRouter to use AI models like Claude or ChatGPT to assist with brainstorming, writing prompts, and content generation."
+"Connect" Button: Redirect users to OpenRouter for authentication using OAuth PKCE for secure login.
+Step 2: OAuth PKCE Flow
+Redirect for Authentication: When the user clicks the "Connect" button, redirect to:
+
+arduino
+Copy code
+https://openrouter.ai/auth?callback_url=YOUR_SITE_URL
+Optionally include a code_challenge using the S256 method for security.
+Example:
+
+javascript
+Copy code
+const generatedCodeChallenge = await sha256CodeChallenge(code_verifier);
+window.location.href = `https://openrouter.ai/auth?callback_url=${YOUR_SITE_URL}&code_challenge=${generatedCodeChallenge}&code_challenge_method=S256`;
+Receive Authorization Code: After logging in, OpenRouter will redirect the user to your site with the authorization code in the URL:
+
+css
+Copy code
+YOUR_SITE_URL?code=AUTHORIZATION_CODE
+Exchange Authorization Code for API Key: Use the authorization code to get the API key:
+
+typescript
+Copy code
+fetch('https://openrouter.ai/api/v1/auth/keys', {
+  method: 'POST',
+  body: JSON.stringify({
+    code: $CODE_FROM_QUERY_PARAM,
+    code_verifier: $CODE_VERIFIER, // only if using code_challenge
+  }),
+}).then(response => response.json()).then(data => {
+  const apiKey = data.key;
+  // Store the API key securely
+});
+Step 3: Using the API Key for LLM Integration
+Once the API key is obtained, it can be used to interact with models like Claude or ChatGPT for generating writing prompts or assisting with brainstorming.
+
+Example of a request to OpenRouter’s API:
+
+typescript
+Copy code
+fetch("https://openrouter.ai/api/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${apiKey}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "model": "claude-v1", // Use Claude or another LLM
+    "messages": [
+      {"role": "system", "content": "You are a helpful writing assistant."},
+      {"role": "user", "content": "Help me brainstorm a plot for a mystery novel."}
+    ]
+  })
+}).then(response => response.json()).then(data => {
+  // Process the AI response (e.g., show plot suggestions in the UI)
+});
+Step 4: UI Feedback and Notifications
+Loading States: Show loading animations during authentication or AI response generation.
+Error Handling: Display clear error messages for issues like failed authentication or API limits.
+Step 7: Integration Testing
+Ensure the following are tested thoroughly:
+
+OAuth PKCE flow (both with and without code_challenge).
+Handling and storing API keys.
+Error handling for invalid tokens or network failures.
