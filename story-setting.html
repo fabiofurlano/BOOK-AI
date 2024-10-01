@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Setting and Timeline - Novel-Building Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lightblue: '#E6F3FF',
+                        darkblue: '#3498db',
+                    },
+                    animation: {
+                        gradient: 'gradient 8s linear infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="story-setting.js" defer></script>
+</head>
+<body class="bg-lightblue min-h-screen font-['Poppins'] flex items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <header class="bg-gradient-to-r from-darkblue to-blue-500 p-6 animate-gradient">
+            <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Story Setting and Timeline</h1>
+            <div id="progress-bar" class="mt-4 bg-white bg-opacity-30 h-2 rounded-full"></div>
+        </header>
+        <main class="p-8">
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Select Your Story's Location</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <div class="location-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-location="urban">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Urban Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Urban</p>
+                    </div>
+                    <div class="location-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-location="rural">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Rural Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Rural</p>
+                    </div>
+                    <div class="location-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-location="fantasy-world">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Fantasy World Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Fantasy World</p>
+                    </div>
+                    <div class="location-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-location="space">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Space Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Space</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Select Your Story's Timeline</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <div class="timeline-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-timeline="past">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Past Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Past</p>
+                    </div>
+                    <div class="timeline-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-timeline="present">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Present Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Present</p>
+                    </div>
+                    <div class="timeline-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-timeline="future">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Future Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Future</p>
+                    </div>
+                    <div class="timeline-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-timeline="multiple">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Multiple Eras Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Multiple Eras</p>
+                    </div>
+                </div>
+            </div>
+            <button id="next-button" class="w-full bg-gradient-to-r from-darkblue to-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out" disabled>
+                Next: Character Development
+            </button>
+        </main>
+        <footer class="bg-gray-100 p-4 text-center text-gray-600">
+            <p>&copy; 2023 Novel-Building Assistant | <a href="settings.html" class="text-blue-500 hover:text-blue-700">Settings</a> | <a href="index.html" class="text-blue-500 hover:text-blue-700">Home</a></p>
+        </footer>
+    </div>
+</body>
+</html>

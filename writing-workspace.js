@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAIInfo();
     setupEventListeners();
     updateProgressBar();
-    loadStoryContent();
     loadChapters();
 });
 
@@ -28,10 +27,10 @@ function loadStoryInfo() {
 function loadCharacters() {
     const characters = JSON.parse(localStorage.getItem('characters') || '[]');
     const charactersList = document.getElementById('characters-list');
-    charactersList.innerHTML = '';
+    charactersList.innerHTML = '<h3 class="text-xl font-semibold mb-2">Characters</h3>';
     characters.forEach(character => {
         const characterElement = document.createElement('div');
-        characterElement.className = 'mb-2 p-2 bg-indigo-100 rounded-lg';
+        characterElement.className = 'mb-2 p-2 bg-blue-100 rounded-lg';
         characterElement.textContent = `${character.name} (${character.role})`;
         characterElement.title = `${character.description}\nMotivation: ${character.motivation}`;
         charactersList.appendChild(characterElement);
@@ -39,16 +38,23 @@ function loadCharacters() {
 }
 
 function loadPlots() {
-    const plots = JSON.parse(localStorage.getItem('plots') || '[]');
+    const plot = JSON.parse(localStorage.getItem('plot') || '{}');
     const plotsList = document.getElementById('plots-list');
-    plotsList.innerHTML = '';
-    plots.forEach(plot => {
+    plotsList.innerHTML = '<h3 class="text-xl font-semibold mb-2">Plot</h3>';
+    if (plot.plotSummary) {
         const plotElement = document.createElement('div');
-        plotElement.className = 'mb-2 p-2 bg-indigo-100 rounded-lg';
-        plotElement.textContent = plot.summary;
-        plotElement.title = `Key Events: ${plot.keyEvents}`;
+        plotElement.className = 'mb-2 p-2 bg-blue-100 rounded-lg';
+        plotElement.innerHTML = `
+            <p><strong>Summary:</strong> ${plot.plotSummary}</p>
+            <p><strong>Main Conflict:</strong> ${plot.mainConflict}</p>
+            <p><strong>Key Points:</strong> ${plot.plotPoints}</p>
+            <p><strong>Climax:</strong> ${plot.climax}</p>
+            <p><strong>Resolution:</strong> ${plot.resolution}</p>
+        `;
         plotsList.appendChild(plotElement);
-    });
+    } else {
+        plotsList.innerHTML += '<p>No plot information available.</p>';
+    }
 }
 
 function loadAIInfo() {
@@ -57,60 +63,26 @@ function loadAIInfo() {
     const tokenCount = localStorage.getItem('tokenCount') || '0';
 
     aiInfo.innerHTML = `
+        <h3 class="text-xl font-semibold mb-2">AI Information</h3>
         <p><strong>Model:</strong> ${selectedModel}</p>
         <p><strong>Tokens Used:</strong> ${tokenCount}</p>
     `;
 }
 
 function setupEventListeners() {
-    const storyContent = document.getElementById('story-content');
-    const wordCount = document.getElementById('word-count');
+    const createChapterButton = document.getElementById('create-chapter');
     const saveStoryButton = document.getElementById('save-story');
     const aiAssistButton = document.getElementById('ai-assist');
-    const createChapterButton = document.getElementById('create-chapter');
 
-    storyContent.addEventListener('input', () => {
-        const words = storyContent.value.trim().split(/\s+/).length;
-        wordCount.textContent = `Words: ${words}`;
-    });
-
+    createChapterButton.addEventListener('click', createNewChapter);
     saveStoryButton.addEventListener('click', saveStory);
     aiAssistButton.addEventListener('click', getAIAssistance);
-    createChapterButton.addEventListener('click', createNewChapter);
 }
 
 function saveStory() {
-    const storyContent = document.getElementById('story-content').value;
-    localStorage.setItem('storyContent', storyContent);
+    const chapters = getChaptersContent();
+    localStorage.setItem('chapters', JSON.stringify(chapters));
     showSuccess('Story saved successfully!');
-}
-
-function loadStoryContent() {
-    const storyContent = document.getElementById('story-content');
-    const savedContent = localStorage.getItem('storyContent');
-    if (savedContent) {
-        storyContent.value = savedContent;
-        const words = savedContent.trim().split(/\s+/).length;
-        document.getElementById('word-count').textContent = `Words: ${words}`;
-    }
-}
-
-function createNewChapter() {
-    const chaptersContainer = document.getElementById('chapters-container');
-    const chapterCount = chaptersContainer.children.length + 1;
-    const chapterElement = document.createElement('div');
-    chapterElement.className = 'mb-4 p-4 bg-gray-100 rounded-lg';
-    chapterElement.innerHTML = `
-        <h3 class="text-xl font-semibold mb-2">Chapter ${chapterCount}</h3>
-        <textarea class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400" rows="10" placeholder="Write your chapter content here..."></textarea>
-        <button class="generate-chapter-ai mt-2 bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 transition duration-300 ease-in-out">Generate with AI</button>
-    `;
-    chaptersContainer.appendChild(chapterElement);
-
-    const generateChapterButton = chapterElement.querySelector('.generate-chapter-ai');
-    generateChapterButton.addEventListener('click', () => generateChapterWithAI(chapterCount));
-
-    saveChapters();
 }
 
 function loadChapters() {
@@ -118,26 +90,49 @@ function loadChapters() {
     const chaptersContainer = document.getElementById('chapters-container');
     chaptersContainer.innerHTML = '';
     chapters.forEach((chapterContent, index) => {
-        const chapterElement = document.createElement('div');
-        chapterElement.className = 'mb-4 p-4 bg-gray-100 rounded-lg';
-        chapterElement.innerHTML = `
-            <h3 class="text-xl font-semibold mb-2">Chapter ${index + 1}</h3>
-            <textarea class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400" rows="10">${chapterContent}</textarea>
-            <button class="generate-chapter-ai mt-2 bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 transition duration-300 ease-in-out">Generate with AI</button>
-        `;
-        chaptersContainer.appendChild(chapterElement);
+        createChapterElement(index + 1, chapterContent);
+    });
+    updateWordCount();
+}
 
-        const generateChapterButton = chapterElement.querySelector('.generate-chapter-ai');
-        generateChapterButton.addEventListener('click', () => generateChapterWithAI(index + 1));
+function createNewChapter() {
+    const chaptersContainer = document.getElementById('chapters-container');
+    const chapterCount = chaptersContainer.children.length + 1;
+    createChapterElement(chapterCount, '');
+    updateWordCount();
+}
+
+function createChapterElement(chapterNumber, content) {
+    const chaptersContainer = document.getElementById('chapters-container');
+    const chapterElement = document.createElement('div');
+    chapterElement.className = 'mb-4 p-4 bg-gray-100 rounded-lg';
+    chapterElement.innerHTML = `
+        <h3 class="text-xl font-semibold mb-2">Chapter ${chapterNumber}</h3>
+        <textarea class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" rows="10" placeholder="Write your chapter content here...">${content}</textarea>
+        <button class="generate-chapter-ai mt-2 bg-gradient-to-r from-purple-400 to-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">Generate with AI</button>
+    `;
+    chaptersContainer.appendChild(chapterElement);
+
+    const textarea = chapterElement.querySelector('textarea');
+    textarea.addEventListener('input', updateWordCount);
+
+    const generateChapterButton = chapterElement.querySelector('.generate-chapter-ai');
+    generateChapterButton.addEventListener('click', () => generateChapterWithAI(chapterNumber));
+}
+
+function getChaptersContent() {
+    const chaptersContainer = document.getElementById('chapters-container');
+    return Array.from(chaptersContainer.children).map(chapterElement => {
+        return chapterElement.querySelector('textarea').value;
     });
 }
 
-function saveChapters() {
-    const chaptersContainer = document.getElementById('chapters-container');
-    const chapters = Array.from(chaptersContainer.children).map(chapterElement => {
-        return chapterElement.querySelector('textarea').value;
-    });
-    localStorage.setItem('chapters', JSON.stringify(chapters));
+function updateWordCount() {
+    const chapters = getChaptersContent();
+    const totalWords = chapters.reduce((count, chapter) => {
+        return count + chapter.trim().split(/\s+/).length;
+    }, 0);
+    document.getElementById('word-count').textContent = `Words: ${totalWords}`;
 }
 
 async function generateChapterWithAI(chapterNumber) {
@@ -156,9 +151,9 @@ async function generateChapterWithAI(chapterNumber) {
     try {
         const storyInfo = JSON.parse(localStorage.getItem('storyInfo') || '{}');
         const characters = JSON.parse(localStorage.getItem('characters') || '[]');
-        const plots = JSON.parse(localStorage.getItem('plots') || '[]');
+        const plot = JSON.parse(localStorage.getItem('plot') || '{}');
 
-        const generatedContent = await generateAIAssistance(apiKey, selectedModel, chapterContent, chapterNumber, storyInfo, characters, plots);
+        const generatedContent = await generateAIAssistance(apiKey, selectedModel, chapterContent, chapterNumber, storyInfo, characters, plot);
         chapterTextarea.value += "\n\n" + generatedContent;
         showSuccess('AI-generated content added to the chapter!');
         
@@ -166,7 +161,7 @@ async function generateChapterWithAI(chapterNumber) {
         const newTokens = currentTokens + Math.ceil(generatedContent.length / 4);
         localStorage.setItem('tokenCount', newTokens.toString());
         loadAIInfo();
-        saveChapters();
+        updateWordCount();
     } catch (error) {
         console.error("Error generating chapter content:", error);
         showError(`Error generating chapter content: ${error.message}`);
@@ -178,7 +173,9 @@ async function generateChapterWithAI(chapterNumber) {
 async function getAIAssistance() {
     const apiKey = localStorage.getItem("openRouterApiKey");
     const selectedModel = localStorage.getItem("selectedModel") || "openai/gpt-3.5-turbo";
-    const storyContent = document.getElementById('story-content').value;
+    const chapters = getChaptersContent();
+    const lastChapterIndex = chapters.length - 1;
+    const lastChapterContent = chapters[lastChapterIndex] || '';
 
     if (!apiKey) {
         showError("Please save a valid API key in the settings page.");
@@ -190,16 +187,24 @@ async function getAIAssistance() {
     try {
         const storyInfo = JSON.parse(localStorage.getItem('storyInfo') || '{}');
         const characters = JSON.parse(localStorage.getItem('characters') || '[]');
-        const plots = JSON.parse(localStorage.getItem('plots') || '[]');
+        const plot = JSON.parse(localStorage.getItem('plot') || '{}');
 
-        const assistance = await generateAIAssistance(apiKey, selectedModel, storyContent, null, storyInfo, characters, plots);
-        document.getElementById('story-content').value += "\n\n" + assistance;
+        const assistance = await generateAIAssistance(apiKey, selectedModel, lastChapterContent, lastChapterIndex + 1, storyInfo, characters, plot);
+        
+        if (lastChapterIndex >= 0) {
+            const lastChapterTextarea = document.querySelector(`#chapters-container div:nth-child(${lastChapterIndex + 1}) textarea`);
+            lastChapterTextarea.value += "\n\n" + assistance;
+        } else {
+            createChapterElement(1, assistance);
+        }
+
         showSuccess('AI assistance added to your story!');
         
         const currentTokens = parseInt(localStorage.getItem('tokenCount') || '0');
         const newTokens = currentTokens + Math.ceil(assistance.length / 4);
         localStorage.setItem('tokenCount', newTokens.toString());
         loadAIInfo();
+        updateWordCount();
     } catch (error) {
         console.error("Error getting AI assistance:", error);
         showError(`Error getting AI assistance: ${error.message}`);
@@ -208,7 +213,7 @@ async function getAIAssistance() {
     }
 }
 
-async function generateAIAssistance(apiKey, model, content, chapterNumber, storyInfo, characters, plots) {
+async function generateAIAssistance(apiKey, model, content, chapterNumber, storyInfo, characters, plot) {
     const apiUrl = "https://openrouter.ai/api/v1/chat/completions";
     const headers = {
         Authorization: `Bearer ${apiKey}`,
@@ -234,17 +239,11 @@ async function generateAIAssistance(apiKey, model, content, chapterNumber, story
     });
     prompt += "\n";
 
-    prompt += "Plot Summary:\n";
-    plots.forEach(plot => {
-        prompt += `${plot.summary}\n`;
-    });
-    prompt += "\n";
-
-    prompt += "Key Events:\n";
-    plots.forEach(plot => {
-        prompt += `${plot.keyEvents}\n`;
-    });
-    prompt += "\n";
+    prompt += `Plot Summary: ${plot.plotSummary}\n`;
+    prompt += `Main Conflict: ${plot.mainConflict}\n`;
+    prompt += `Key Plot Points: ${plot.plotPoints}\n`;
+    prompt += `Climax: ${plot.climax}\n`;
+    prompt += `Resolution: ${plot.resolution}\n\n`;
 
     prompt += `Current content:\n${content}\n\n`;
     prompt += "Please continue the story, developing the characters and advancing the plot. Write approximately 300-500 words.";
@@ -276,7 +275,7 @@ function updateProgressBar() {
     const progressBar = document.getElementById('progress-bar');
     if (progressBar) {
         const totalSteps = 5;
-        const currentStep = 4;
+        const currentStep = 5; // Writing Workspace is the final step
         const progress = (currentStep / totalSteps) * 100;
         progressBar.style.width = `${progress}%`;
     } else {

@@ -10,6 +10,10 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        lightblue: '#E6F3FF',
+                        darkblue: '#3498db',
+                    },
                     animation: {
                         gradient: 'gradient 8s linear infinite',
                     },
@@ -31,106 +35,83 @@
     </script>
     <script src="main.js" defer></script>
 </head>
-<body class="bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300 min-h-screen font-['Poppins'] flex items-center justify-center">
-    <div class="w-full max-w-4xl bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden">
-        <header class="bg-gradient-to-r from-purple-300 via-purple-400 to-purple-500 p-6 animate-gradient">
+<body class="bg-lightblue min-h-screen font-['Poppins'] flex items-center justify-center">
+    <div class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <header class="bg-gradient-to-r from-darkblue to-blue-500 p-6 animate-gradient">
             <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Novel-Building Assistant</h1>
         </header>
         <main class="p-8">
             <div class="mb-8">
-                <h2 class="text-2xl font-semibold mb-4">Select Your Language</h2>
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Select Your Language</h2>
                 <div class="flex space-x-4">
                     <div class="flex items-center">
                         <input type="radio" id="language-en" name="language" value="en" checked>
-                        <label for="language-en" class="ml-2">English <img src="https://flagcdn.com/w32/gb.png" alt="English Flag"></label>
+                        <label for="language-en" class="ml-2 text-gray-700">English <img src="https://flagcdn.com/w32/gb.png" alt="English Flag" class="inline-block ml-1"></label>
                     </div>
                     <div class="flex items-center">
                         <input type="radio" id="language-es" name="language" value="es">
-                        <label for="language-es" class="ml-2">Spanish <img src="https://flagcdn.com/w32/es.png" alt="Spanish Flag"></label>
+                        <label for="language-es" class="ml-2 text-gray-700">Spanish <img src="https://flagcdn.com/w32/es.png" alt="Spanish Flag" class="inline-block ml-1"></label>
                     </div>
                     <div class="flex items-center">
                         <input type="radio" id="language-fr" name="language" value="fr">
-                        <label for="language-fr" class="ml-2">French <img src="https://flagcdn.com/w32/fr.png" alt="French Flag"></label>
+                        <label for="language-fr" class="ml-2 text-gray-700">French <img src="https://flagcdn.com/w32/fr.png" alt="French Flag" class="inline-block ml-1"></label>
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-8 mb-8">
-                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="fantasy">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Fantasy Icon" class="rounded-full">
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Select Your Genre</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="fantasy">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Fantasy Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Fantasy</p>
                     </div>
-                    <p class="text-center font-semibold">Fantasy</p>
-                </div>
-                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="science-fiction">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Science Fiction Icon" class="rounded-full">
+                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="science-fiction">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Science Fiction Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Science Fiction</p>
                     </div>
-                    <p class="text-center font-semibold">Science Fiction</p>
-                </div>
-                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="mystery">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Mystery Icon" class="rounded-full">
+                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="mystery">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Mystery Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Mystery</p>
                     </div>
-                    <p class="text-center font-semibold">Mystery</p>
-                </div>
-                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="romance">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Romance Icon" class="rounded-full">
+                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="romance">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Romance Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Romance</p>
                     </div>
-                    <p class="text-center font-semibold">Romance</p>
-                </div>
-                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="thriller">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Thriller Icon" class="rounded-full">
+                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="thriller">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Thriller Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Thriller</p>
                     </div>
-                    <p class="text-center font-semibold">Thriller</p>
-                </div>
-                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="historical-fiction">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Historical Fiction Icon" class="rounded-full">
+                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="historical-fiction">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Historical Fiction Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Historical Fiction</p>
                     </div>
-                    <p class="text-center font-semibold">Historical Fiction</p>
-                </div>
-                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="young-adult">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Young Adult Icon" class="rounded-full">
+                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="young-adult">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Young Adult Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Young Adult</p>
                     </div>
-                    <p class="text-center font-semibold">Young Adult</p>
-                </div>
-                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="horror">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Horror Icon" class="rounded-full">
+                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="horror">
+                        <div class="flex items-center justify-center mb-2">
+                            <img src="https://via.placeholder.com/50" alt="Horror Icon" class="rounded-full">
+                        </div>
+                        <p class="text-center font-semibold text-gray-700">Horror</p>
                     </div>
-                    <p class="text-center font-semibold">Horror</p>
-                </div>
-                <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-genre="biographical">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Biographical Icon" class="rounded-full">
-                    </div>
-                    <p class="text-center font-semibold">Biographical</p>
                 </div>
             </div>
-            <div class="grid grid-cols-3 gap-8 mb-8">
-                <div class="book-type-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-type="novel">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Novel Icon" class="rounded-full">
-                    </div>
-                    <p class="text-center font-semibold">Novel</p>
-                </div>
-                <div class="book-type-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-type="novella">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Novella Icon" class="rounded-full">
-                    </div>
-                    <p class="text-center font-semibold">Novella</p>
-                </div>
-                <div class="book-type-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out" data-type="short-story">
-                    <div class="flex items-center justify-center mb-2">
-                        <img src="https://via.placeholder.com/50" alt="Short Story Icon" class="rounded-full">
-                    </div>
-                    <p class="text-center font-semibold">Short Story</p>
-                </div>
-            </div>
-            <button id="start-button" class="w-full bg-gradient-to-r from-purple-400 to-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out" disabled>
+            <button id="start-button" class="w-full bg-gradient-to-r from-darkblue to-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out" disabled>
                 Start Building Your Novel
             </button>
         </main>

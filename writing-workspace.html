@@ -10,6 +10,10 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        lightblue: '#E6F3FF',
+                        darkblue: '#3498db',
+                    },
                     animation: {
                         gradient: 'gradient 8s linear infinite',
                     },
@@ -31,14 +35,14 @@
     </script>
     <script src="writing-workspace.js" defer></script>
 </head>
-<body class="bg-gradient-to-br from-indigo-100 via-indigo-200 to-indigo-300 min-h-screen font-['Poppins'] flex flex-col">
-    <header class="bg-gradient-to-r from-indigo-300 via-indigo-400 to-indigo-500 p-6 animate-gradient">
+<body class="bg-lightblue min-h-screen font-['Poppins'] flex flex-col">
+    <header class="bg-gradient-to-r from-darkblue to-blue-500 p-6 animate-gradient">
         <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Writing Workspace</h1>
         <div id="progress-bar" class="mt-4 bg-white bg-opacity-30 h-2 rounded-full"></div>
     </header>
     <main class="flex-grow flex p-4">
-        <div class="w-1/4 bg-white bg-opacity-80 backdrop-blur-lg rounded-lg shadow-lg p-4 mr-4 overflow-y-auto">
-            <h2 class="text-2xl font-semibold mb-4">Story Elements</h2>
+        <div class="w-1/4 bg-white rounded-lg shadow-md p-4 mr-4 overflow-y-auto">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Story Elements</h2>
             <div id="story-info" class="mb-6">
                 <h3 class="text-xl font-semibold mb-2">Story Information</h3>
                 <!-- Story info will be dynamically added here -->
@@ -56,21 +60,20 @@
                 <!-- AI info will be dynamically added here -->
             </div>
         </div>
-        <div class="flex-grow bg-white bg-opacity-80 backdrop-blur-lg rounded-lg shadow-lg p-4 flex flex-col">
+        <div class="flex-grow bg-white rounded-lg shadow-md p-4 flex flex-col">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-semibold">Write Your Story</h2>
+                <h2 class="text-2xl font-semibold text-gray-800">Write Your Story</h2>
                 <div id="word-count" class="text-gray-600">Words: 0</div>
             </div>
             <div class="mb-4">
-                <button id="create-chapter" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out">Create New Chapter</button>
+                <button id="create-chapter" class="bg-gradient-to-r from-darkblue to-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">Create New Chapter</button>
             </div>
-            <div id="chapters-container" class="mb-4">
+            <div id="chapters-container" class="mb-4 overflow-y-auto flex-grow">
                 <!-- Chapters will be dynamically added here -->
             </div>
-            <textarea id="story-content" class="flex-grow p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Start writing your story here..."></textarea>
             <div class="mt-4 flex justify-between">
-                <button id="save-story" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out">Save Story</button>
-                <button id="ai-assist" class="bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 transition duration-300 ease-in-out">AI Assist</button>
+                <button id="save-story" class="bg-gradient-to-r from-green-400 to-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">Save Story</button>
+                <button id="ai-assist" class="bg-gradient-to-r from-purple-400 to-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">AI Assist</button>
             </div>
         </div>
     </main>
