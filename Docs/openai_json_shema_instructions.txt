@@ -1,0 +1,110 @@
+To use the OpenAI Structured Outputs feature in your HTML and JavaScript application, follow these steps:
+
+## Overview of Structured Outputs
+
+Structured Outputs allows developers to define a JSON Schema that the model's responses must adhere to. This ensures that the outputs are consistent and can be easily parsed and utilized in applications. There are two primary ways to implement this: **function calling** and **response format**.
+
+## Setting Up Structured Outputs
+
+### 1. **Choose Your Approach**
+
+- **Function Calling**: Use this when you want the model to interact with your application functions or tools.
+- **Response Format**: Use this when you want the model's output to conform to a specific JSON Schema for display purposes.
+
+### 2. **Define Your JSON Schema**
+
+You need to create a JSON Schema that details the expected structure of the response. Here’s an example schema using JavaScript with Zod:
+
+```javascript
+import { z } from 'zod';
+
+const Step = z.object({
+    explanation: z.string(),
+    output: z.string(),
+});
+
+const MathResponse = z.object({
+    steps: z.array(Step),
+    final_answer: z.string(),
+});
+```
+
+This schema defines a `MathResponse` object that includes an array of `Step` objects and a final answer.
+
+### 3. **Integrate with OpenAI API**
+
+Use the OpenAI API to send requests with your defined schema. Here’s an example of how to implement this in a Next.js API route:
+
+```javascript
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+
+export async function POST(req) {
+    const { messages } = await req.json();
+
+    const response = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages,
+        response_format: {
+            type: 'json_schema',
+            json_schema: {
+                name: "math_response",
+                schema: MathResponse.shape,
+            },
+        },
+    });
+
+    return response;
+}
+```
+
+### 4. **Handle Responses**
+
+Once you receive the response from OpenAI, you can parse it according to your schema:
+
+```javascript
+const math_response = response.choices[0].message.parsed;
+
+console.log(math_response.steps);
+console.log(math_response.final_answer);
+```
+
+### 5. **Rendering in HTML**
+
+To display the structured output in your HTML, ensure you format it correctly. For instance, if you're using React, you might do something like this:
+
+```javascript
+return (
+    <div>
+        {math_response.steps.map((step, index) => (
+            <div key={index}>
+                <strong>Step {index + 1}:</strong> {step.explanation} - Output: {step.output}
+            </div>
+        ))}
+        <div>
+            <strong>Final Answer:</strong> {math_response.final_answer}
+        </div>
+    </div>
+);
+```
+
+## Additional Tips
+
+- Ensure that your JSON Schema is clear and intuitive for better model performance.
+- Handle cases where the model may refuse to fulfill requests by checking for a `refusal` property in the response.
+- You can enhance UI rendering by using `<pre>` tags or other HTML elements to maintain formatting when displaying text responses[1][3][4].
+
+By following these steps, you can effectively utilize OpenAI's Structured Outputs feature in your web applications, ensuring that responses are structured and easily manageable within your frontend code.
+
+Citations:
+[1] https://platform.openai.com/docs/guides/structured-outputs
+[2] https://www.youtube.com/watch?v=8eCZeFhvyGE
+[3] https://openai.com/index/introducing-structured-outputs-in-the-api/
+[4] https://stackoverflow.com/questions/77822185/format-responses-from-open-ai-ai-in-typescript-javascript-css
+[5] https://community.openai.com/t/receive-response-in-html-format-gpt4-preview/532570
+[6] https://community.openai.com/t/structured-outputs-deep-dive/930169
+[7] https://community.openai.com/t/formatting-api-responses-theory/114412
+[8] https://stackoverflow.com/questions/78053868/using-showdown-js-with-openai-streaming-response

@@ -1,123 +1,459 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novel-Building Assistant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        lightblue: '#E6F3FF',
-                        darkblue: '#3498db',
-                    },
-                    animation: {
-                        gradient: 'gradient 8s linear infinite',
-                    },
-                    keyframes: {
-                        gradient: {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center'
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Novel-Building Assistant</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            lightblue: "#ADD8E6",
+                            darkblue: "#3498db",
+                        },
+                        animation: {
+                            gradient: "gradient 8s linear infinite",
+                        },
+                        keyframes: {
+                            gradient: {
+                                "0%, 100%": {
+                                    "background-size": "200% 200%",
+                                    "background-position": "left center",
+                                },
+                                "50%": {
+                                    "background-size": "200% 200%",
+                                    "background-position": "right center",
+                                },
                             },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
-                        }
-                    }
-                }
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            .genre-option.active {
+                border-color: #3498db;
+                box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
             }
-        }
-    </script>
-    <script src="main.js" defer></script>
-</head>
-<body class="bg-lightblue min-h-screen font-['Poppins'] flex items-center justify-center">
-    <div class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
-        <header class="bg-gradient-to-r from-darkblue to-blue-500 p-6 animate-gradient">
-            <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Novel-Building Assistant</h1>
-        </header>
-        <main class="p-8">
-            <div class="mb-8">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Select Your Language</h2>
-                <div class="flex space-x-4">
-                    <div class="flex items-center">
-                        <input type="radio" id="language-en" name="language" value="en" checked>
-                        <label for="language-en" class="ml-2 text-gray-700">English <img src="https://flagcdn.com/w32/gb.png" alt="English Flag" class="inline-block ml-1"></label>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="radio" id="language-es" name="language" value="es">
-                        <label for="language-es" class="ml-2 text-gray-700">Spanish <img src="https://flagcdn.com/w32/es.png" alt="Spanish Flag" class="inline-block ml-1"></label>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="radio" id="language-fr" name="language" value="fr">
-                        <label for="language-fr" class="ml-2 text-gray-700">French <img src="https://flagcdn.com/w32/fr.png" alt="French Flag" class="inline-block ml-1"></label>
+            .language-option img.active {
+                border-color: #3498db;
+            }
+            .tooltip {
+                width: 200px;
+            }
+        </style>
+        <script src="index.js" defer></script>
+    </head>
+    <body
+        class="bg-lightblue min-h-screen font-['Poppins'] flex items-center justify-center"
+    >
+        <div
+            class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden"
+        >
+            <header
+                class="bg-gradient-to-r from-darkblue to-blue-500 p-6 animate-gradient"
+            >
+                <h1
+                    class="text-4xl font-bold text-center text-white drop-shadow-lg"
+                >
+                    Novel-Building Assistant
+                </h1>
+            </header>
+            <main class="p-8">
+                <div class="flex gap-8">
+                    <!-- Sidebar Section -->
+                    <aside
+                        class="w-1/4 bg-gray-100 p-4 rounded-xl shadow-md sticky top-4"
+                    >
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                            Story Elements
+                        </h3>
+                        <p id="story-language" class="text-gray-700">
+                            🌍 Language: Not Selected
+                        </p>
+                        <p id="story-genre" class="text-gray-700 mt-2">
+                            📚 Genre: Not Selected
+                        </p>
+                    </aside>
+
+                    <!-- Main Section -->
+                    <div class="w-3/4">
+                        <div class="mb-8">
+                            <h2
+                                class="text-2xl font-semibold mb-4 text-gray-800"
+                            >
+                                Select Your Language
+                            </h2>
+                            <div class="flex space-x-4">
+                                <div
+                                    class="flex items-center cursor-pointer language-option"
+                                    data-language="en"
+                                >
+                                    <input
+                                        type="radio"
+                                        id="language-en"
+                                        name="language"
+                                        value="en"
+                                        checked
+                                    />
+                                    <label
+                                        for="language-en"
+                                        class="ml-2 text-gray-700 flex items-center"
+                                    >
+                                        English
+                                        <img
+                                            src="https://flagcdn.com/w40/gb.png"
+                                            alt="English Flag"
+                                            class="inline-block ml-1 border-2 border-transparent rounded h-6"
+                                        />
+                                    </label>
+                                </div>
+                                <div
+                                    class="flex items-center cursor-pointer language-option"
+                                    data-language="es"
+                                >
+                                    <input
+                                        type="radio"
+                                        id="language-es"
+                                        name="language"
+                                        value="es"
+                                    />
+                                    <label
+                                        for="language-es"
+                                        class="ml-2 text-gray-700 flex items-center"
+                                    >
+                                        Spanish
+                                        <img
+                                            src="https://flagcdn.com/w40/es.png"
+                                            alt="Spanish Flag"
+                                            class="inline-block ml-1 border-2 border-transparent rounded h-6"
+                                        />
+                                    </label>
+                                </div>
+                                <div
+                                    class="flex items-center cursor-pointer language-option"
+                                    data-language="fr"
+                                >
+                                    <input
+                                        type="radio"
+                                        id="language-fr"
+                                        name="language"
+                                        value="fr"
+                                    />
+                                    <label
+                                        for="language-fr"
+                                        class="ml-2 text-gray-700 flex items-center"
+                                    >
+                                        French
+                                        <img
+                                            src="https://flagcdn.com/w40/fr.png"
+                                            alt="French Flag"
+                                            class="inline-block ml-1 border-2 border-transparent rounded h-6"
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-8">
+                            <h2
+                                class="text-2xl font-semibold mb-4 text-gray-800"
+                            >
+                                Select Your Genre
+                            </h2>
+                            <div
+                                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+                            >
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="fantasy"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Explore magical worlds and mythical
+                                        creatures.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        🧙‍♂️
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Fantasy
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="science-fiction"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Explore futuristic technology and alien
+                                        worlds.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        🚀
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Science Fiction
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="mystery"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Solve intriguing puzzles and uncover
+                                        secrets.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        🕵️
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Mystery
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="romance"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Experience love stories and emotional
+                                        journeys.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        ❤️
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Romance
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="thriller"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Feel the suspense and excitement of
+                                        high-stakes stories.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        🕷️
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Thriller
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="horror"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Delve into frightening and unsettling
+                                        tales.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        👻
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Horror
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="historical-fiction"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Journey through different eras of
+                                        history.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        🏛️
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Historical Fiction
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="adventure"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Embark on exciting journeys and quests.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        🗺️
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Adventure
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="comedy"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Enjoy humorous and lighthearted stories.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        😂
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Comedy
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="drama"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Experience intense emotional and
+                                        personal conflicts.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        🎭
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Drama
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="dystopian"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Explore dark, oppressive future
+                                        societies.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        🏙️
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Dystopian
+                                    </p>
+                                </div>
+                                <div
+                                    class="genre-option relative cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200"
+                                    data-genre="Kids"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Stories focusing on teenage characters
+                                        and experiences.
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-4xl"
+                                    >
+                                        🧑‍🤝‍🧑
+                                    </div>
+                                    <p
+                                        class="text-center font-semibold text-gray-700"
+                                    >
+                                        Kids
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <p
+                            id="guidance-message"
+                            class="text-sm text-gray-500 mb-4"
+                        >
+                            Please select a language and genre to begin building
+                            your novel.
+                        </p>
+                        <button
+                            id="start-button"
+                            class="w-full bg-gradient-to-r from-darkblue to-lightblue text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                            disabled
+                        >
+                            Next: Story Setting and Timeline
+                        </button>
                     </div>
                 </div>
-            </div>
-            <div class="mb-8">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Select Your Genre</h2>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="fantasy">
-                        <div class="flex items-center justify-center mb-2">
-                            <img src="https://via.placeholder.com/50" alt="Fantasy Icon" class="rounded-full">
-                        </div>
-                        <p class="text-center font-semibold text-gray-700">Fantasy</p>
-                    </div>
-                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="science-fiction">
-                        <div class="flex items-center justify-center mb-2">
-                            <img src="https://via.placeholder.com/50" alt="Science Fiction Icon" class="rounded-full">
-                        </div>
-                        <p class="text-center font-semibold text-gray-700">Science Fiction</p>
-                    </div>
-                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="mystery">
-                        <div class="flex items-center justify-center mb-2">
-                            <img src="https://via.placeholder.com/50" alt="Mystery Icon" class="rounded-full">
-                        </div>
-                        <p class="text-center font-semibold text-gray-700">Mystery</p>
-                    </div>
-                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="romance">
-                        <div class="flex items-center justify-center mb-2">
-                            <img src="https://via.placeholder.com/50" alt="Romance Icon" class="rounded-full">
-                        </div>
-                        <p class="text-center font-semibold text-gray-700">Romance</p>
-                    </div>
-                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="thriller">
-                        <div class="flex items-center justify-center mb-2">
-                            <img src="https://via.placeholder.com/50" alt="Thriller Icon" class="rounded-full">
-                        </div>
-                        <p class="text-center font-semibold text-gray-700">Thriller</p>
-                    </div>
-                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="historical-fiction">
-                        <div class="flex items-center justify-center mb-2">
-                            <img src="https://via.placeholder.com/50" alt="Historical Fiction Icon" class="rounded-full">
-                        </div>
-                        <p class="text-center font-semibold text-gray-700">Historical Fiction</p>
-                    </div>
-                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="young-adult">
-                        <div class="flex items-center justify-center mb-2">
-                            <img src="https://via.placeholder.com/50" alt="Young Adult Icon" class="rounded-full">
-                        </div>
-                        <p class="text-center font-semibold text-gray-700">Young Adult</p>
-                    </div>
-                    <div class="genre-option cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out border border-gray-200" data-genre="horror">
-                        <div class="flex items-center justify-center mb-2">
-                            <img src="https://via.placeholder.com/50" alt="Horror Icon" class="rounded-full">
-                        </div>
-                        <p class="text-center font-semibold text-gray-700">Horror</p>
-                    </div>
-                </div>
-            </div>
-            <button id="start-button" class="w-full bg-gradient-to-r from-darkblue to-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out" disabled>
-                Start Building Your Novel
-            </button>
-        </main>
-        <footer class="bg-gray-100 p-4 text-center text-gray-600">
-            <p>&copy; 2023 Novel-Building Assistant | <a href="settings.html" class="text-blue-500 hover:text-blue-700">Settings</a></p>
-        </footer>
-    </div>
-</body>
+            </main>
+            <footer class="bg-gray-100 p-4 text-center text-gray-600">
+                <p>
+                    &copy; 2023 Novel-Building Assistant |
+                    <a
+                        href="settings.html"
+                        class="text-blue-500 hover:text-blue-700"
+                        >Settings</a
+                    >
+                    |
+                    <a
+                        href="story-setting.html"
+                        class="text-blue-500 hover:text-blue-700"
+                        >Next: Story Setting</a
+                    >
+                </p>
+            </footer>
+        </div>
+    </body>
 </html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI editor box </title>
+    <style>
+        /* General Container Styling */
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            width: 800px; /* Increased width to accommodate more options */
+            margin: 20px auto;
+            font-family: 'Arial', sans-serif;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        /* Dropdowns Row */
+        .dropdowns-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+            width: 100%;
+        }
+
+        /* Dropdown container */
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+            width: 48%;
+        }
+
+        /* Dropdown button */
+        .dropdown-button {
+            background-color: #fff;
+            color: #333;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        /* Dropdown content */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            width: 100%;
+            border-radius: 5px;
+            max-height: 400px; /* Increased max-height for more options */
+            overflow-y: auto;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Show the dropdown content when the container has 'show' class */
+        .dropdown-container.show .dropdown-content {
+            display: block;
+        }
+
+        /* Dropdown items */
+        .dropdown-item {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        /* Dropdown item content */
+        .dropdown-item-content {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Hover effect on dropdown items */
+        .dropdown-item:hover {
+            background-color: #ddd;
+        }
+
+        /* Icon style in dropdown */
+        .icon {
+            margin-right: 10px;
+            font-size: 20px; /* Ensure consistent icon size */
+            min-width: 24px; /* Ensure icons align properly */
+            text-align: center;
+        }
+
+        /* Description under each dropdown item */
+        .description {
+            font-size: 12px;
+            color: #666;
+            margin: 5px 0 0 34px; /* Align with text after icon */
+        }
+
+        /* Textarea styling */
+        .editor-textarea {
+            width: 100%;
+        }
+
+        .editor-textarea textarea {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        /* Arrow icon rotation when dropdown is open */
+        .dropdown-button .icon-arrow {
+            transition: transform 0.3s;
+        }
+
+        .dropdown-container.show .dropdown-button .icon-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Scrollbar Styling for Dropdowns */
+        .dropdown-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .dropdown-content::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="editor-container">
+    <div class="dropdowns-row">
+        <!-- Tone Dropdown Menu -->
+        <div class="dropdown-container" id="tone-dropdown">
+            <button class="dropdown-button">Tone: Neutral <span class="icon icon-arrow">⬇️</span></button>
+            <div class="dropdown-content">
+                <div class="dropdown-item" data-value="Formal">
+                    <div class="dropdown-item-content">
+                        <span class="icon">🎩</span> <span>Formal</span>
+                    </div>
+                    <p class="description">Uses professional and sophisticated language.</p>
+                </div>
+                <div class="dropdown-item" data-value="Casual">
+                    <div class="dropdown-item-content">
+                        <span class="icon">😎</span> <span>Casual</span>
+                    </div>
+                    <p class="description">Employs relaxed and informal expressions.</p>
+                </div>
+                <div class="dropdown-item" data-value="Neutral">
+                    <div class="dropdown-item-content">
+                        <span class="icon">🟢</span> <span>Neutral</span>
+                    </div>
+                    <p class="description">Maintains an unbiased and objective tone.</p>
+                </div>
+                <div class="dropdown-item" data-value="Friendly">
+                    <div class="dropdown-item-content">
+                        <span class="icon">😊</span> <span>Friendly</span>
+                    </div>
+                    <p class="description">Conveys warmth and approachability.</p>
+                </div>
+                <div class="dropdown-item" data-value="Assertive">
+                    <div class="dropdown-item-content">
+                        <span class="icon">💪</span> <span>Assertive</span>
+                    </div>
+                    <p class="description">Communicates confidence and decisiveness.</p>
+                </div>
+                <div class="dropdown-item" data-value="Humorous">
+                    <div class="dropdown-item-content">
+                        <span class="icon">😂</span> <span>Humorous</span>
+                    </div>
+                    <p class="description">Incorporates humor to engage the audience.</p>
+                </div>
+                <div class="dropdown-item" data-value="Inspirational">
+                    <div class="dropdown-item-content">
+                        <span class="icon">🌟</span> <span>Inspirational</span>
+                    </div>
+                    <p class="description">Aims to inspire and motivate the audience.</p>
+                </div>
+                <div class="dropdown-item" data-value="Persuasive">
+                    <div class="dropdown-item-content">
+                        <span class="icon">📢</span> <span>Persuasive</span>
+                    </div>
+                    <p class="description">Designed to convince and influence.</p>
+                </div>
+                <div class="dropdown-item" data-value="Educational">
+                    <div class="dropdown-item-content">
+                        <span class="icon">📚</span> <span>Educational</span>
+                    </div>
+                    <p class="description">Provides informative and instructional content.</p>
+                </div>
+                <div class="dropdown-item" data-value="Authoritative">
+                    <div class="dropdown-item-content">
+                        <span class="icon">👑</span> <span>Authoritative</span>
+                    </div>
+                    <p class="description">Conveys expertise and reliability.</p>
+                </div>
+                <div class="dropdown-item" data-value="Conversational">
+                    <div class="dropdown-item-content">
+                        <span class="icon">💬</span> <span>Conversational</span>
+                    </div>
+                    <p class="description">Engages in a two-way dialogue with the audience.</p>
+                </div>
+                <div class="dropdown-item" data-value="Motivational">
+                    <div class="dropdown-item-content">
+                        <span class="icon">🚀</span> <span>Motivational</span>
+                    </div>
+                    <p class="description">Encourages and drives the audience to take action.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Assistant Dropdown Menu -->
+        <div class="dropdown-container" id="assistant-dropdown">
+            <button class="dropdown-button">AI Assistant: Clarify <span class="icon icon-arrow">⬇️</span></button>
+            <div class="dropdown-content">
+                <div class="dropdown-item" data-value="Clarify">
+                    <div class="dropdown-item-content">
+                        <span class="icon">💡</span> <span>Clarify</span>
+                    </div>
+                    <p class="description">Makes the text more clear and concise.</p>
+                </div>
+                <div class="dropdown-item" data-value="Exemplify">
+                    <div class="dropdown-item-content">
+                        <span class="icon">🔍</span> <span>Exemplify</span>
+                    </div>
+                    <p class="description">Provides examples for better understanding.</p>
+                </div>
+                <div class="dropdown-item" data-value="Expand">
+                    <div class="dropdown-item-content">
+                        <span class="icon">↔️</span> <span>Expand</span>
+                    </div>
+                    <p class="description">Expands the text with additional information.</p>
+                </div>
+                <div class="dropdown-item" data-value="Explain">
+                    <div class="dropdown-item-content">
+                        <span class="icon">📝</span> <span>Explain</span>
+                    </div>
+                    <p class="description">Provides detailed explanations.</p>
+                </div>
+                <div class="dropdown-item" data-value="Humanize">
+                    <div class="dropdown-item-content">
+                        <span class="icon">🤗</span> <span>Humanize</span>
+                    </div>
+                    <p class="description">Makes the text more human and relatable.</p>
+                </div>
+                <div class="dropdown-item" data-value="Shorten">
+                    <div class="dropdown-item-content">
+                        <span class="icon">✂️</span> <span>Shorten</span>
+                    </div>
+                    <p class="description">Shortens the text while maintaining meaning.</p>
+                </div>
+                <div class="dropdown-item" data-value="Summarize">
+                    <div class="dropdown-item-content">
+                        <span class="icon">📄</span> <span>Summarize</span>
+                    </div>
+                    <p class="description">Condenses the text into a brief summary.</p>
+                </div>
+                <div class="dropdown-item" data-value="Paraphrase">
+                    <div class="dropdown-item-content">
+                        <span class="icon">🔄</span> <span>Paraphrase</span>
+                    </div>
+                    <p class="description">Rewords the text without changing its meaning.</p>
+                </div>
+                <div class="dropdown-item" data-value="Translate">
+                    <div class="dropdown-item-content">
+                        <span class="icon">🌐</span> <span>Translate</span>
+                    </div>
+                    <p class="description">Converts the text into a different language.</p>
+                </div>
+                <div class="dropdown-item" data-value="Optimize SEO">
+                    <div class="dropdown-item-content">
+                        <span class="icon">📈</span> <span>Optimize SEO</span>
+                    </div>
+                    <p class="description">Enhances the text for better search engine ranking.</p>
+                </div>
+                <div class="dropdown-item" data-value="Proofread">
+                    <div class="dropdown-item-content">
+                        <span class="icon">✔️</span> <span>Proofread</span>
+                    </div>
+                    <p class="description">Checks and corrects grammatical errors.</p>
+                </div>
+                <div class="dropdown-item" data-value="Generate Ideas">
+                    <div class="dropdown-item-content">
+                        <span class="icon">💭</span> <span>Generate Ideas</span>
+                    </div>
+                    <p class="description">Provides creative ideas and suggestions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Textarea -->
+    <div class="editor-textarea">
+        <textarea id="editor-text" placeholder="Type here..." rows="5"></textarea>
+    </div>
+</div>
+
+<script>
+    // Function to toggle dropdown
+    function toggleDropdown(dropdown) {
+        dropdown.classList.toggle('show');
+    }
+
+    // Close dropdowns if clicked outside
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown-button')) {
+            document.querySelectorAll('.dropdown-container').forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+        }
+    }
+
+    // Handle Tone Dropdown
+    const toneDropdown = document.getElementById('tone-dropdown');
+    const toneButton = toneDropdown.querySelector('.dropdown-button');
+    const toneItems = toneDropdown.querySelectorAll('.dropdown-item');
+
+    toneButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDropdown(toneDropdown);
+    });
+
+    toneItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const selectedTone = item.getAttribute('data-value');
+            toneButton.innerHTML = `Tone: ${selectedTone} <span class="icon icon-arrow">⬇️</span>`;
+            toneDropdown.classList.remove('show');
+            // You can add additional functionality here based on the selected tone
+            applyTone(selectedTone);
+        });
+    });
+
+    // Handle AI Assistant Dropdown
+    const assistantDropdown = document.getElementById('assistant-dropdown');
+    const assistantButton = assistantDropdown.querySelector('.dropdown-button');
+    const assistantItems = assistantDropdown.querySelectorAll('.dropdown-item');
+
+    assistantButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDropdown(assistantDropdown);
+    });
+
+    assistantItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const selectedAssistant = item.getAttribute('data-value');
+            assistantButton.innerHTML = `AI Assistant: ${selectedAssistant} <span class="icon icon-arrow">⬇️</span>`;
+            assistantDropdown.classList.remove('show');
+            // Implement the functionality based on the selected AI assistant feature
+            applyAssistantFeature(selectedAssistant);
+        });
+    });
+
+    // Example function to handle AI Assistant features
+    function applyAssistantFeature(feature) {
+        const text = document.getElementById('editor-text').value;
+        let modifiedText = text;
+
+        switch(feature) {
+            case 'Clarify':
+                modifiedText = `Clarified: ${text}`;
+                break;
+            case 'Exemplify':
+                modifiedText = `Exemplified: ${text}`;
+                break;
+            case 'Expand':
+                modifiedText = `Expanded: ${text}`;
+                break;
+            case 'Explain':
+                modifiedText = `Explanation: ${text}`;
+                break;
+            case 'Humanize':
+                modifiedText = `Humanized: ${text}`;
+                break;
+            case 'Shorten':
+                modifiedText = `Shortened: ${text}`;
+                break;
+            case 'Summarize':
+                modifiedText = `Summary: ${text}`;
+                break;
+            case 'Paraphrase':
+                modifiedText = `Paraphrased: ${text}`;
+                break;
+            case 'Translate':
+                modifiedText = `Translated: ${text}`;
+                break;
+            case 'Optimize SEO':
+                modifiedText = `SEO Optimized: ${text}`;
+                break;
+            case 'Proofread':
+                modifiedText = `Proofread: ${text}`;
+                break;
+            case 'Generate Ideas':
+                modifiedText = `Ideas: ${text}`;
+                break;
+            default:
+                break;
+        }
+
+        // For demonstration, we'll just update the textarea. In a real application, you'd integrate with the AI API.
+        document.getElementById('editor-text').value = modifiedText;
+    }
+
+    // Example function to handle Tone changes
+    function applyTone(tone) {
+        const textArea = document.getElementById('editor-text');
+        const currentText = textArea.value;
+
+        // Implement tone adjustment logic here.
+        // For demonstration, we'll prepend the tone to the text if not already present.
+        const tonePrefix = `[${tone} Tone]: `;
+        if (!currentText.startsWith(`[${tone} Tone]: `)) {
+            // Remove any existing tone prefix
+            const newText = currentText.replace(/^\[[^\]]+\] Tone:\s*/, '');
+            textArea.value = `${tonePrefix}${newText}`;
+        }
+    }
+</script>
+
+</body>
+</html>

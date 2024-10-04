@@ -46,27 +46,54 @@ function savePlot() {
     }
 
     const plot = { plotSummary, mainConflict, plotPoints, climax, resolution };
-    localStorage.setItem('plot', JSON.stringify(plot));
+    const plots = JSON.parse(localStorage.getItem('plots') || '[]');
+    plots.push(plot);
+    localStorage.setItem('plots', JSON.stringify(plots));
 
     showSuccess('Plot saved successfully!');
     console.log('Plot saved:', plot);
+    displayPlot(plot);
 }
 
 function loadPlot() {
-    const savedPlot = JSON.parse(localStorage.getItem('plot') || '{}');
-    if (savedPlot.plotSummary) {
-        document.getElementById('plot-summary').value = savedPlot.plotSummary;
-        document.getElementById('main-conflict').value = savedPlot.mainConflict;
-        document.getElementById('plot-points').value = savedPlot.plotPoints;
-        document.getElementById('climax').value = savedPlot.climax;
-        document.getElementById('resolution').value = savedPlot.resolution;
-    }
+    const savedPlots = JSON.parse(localStorage.getItem('plots') || '[]');
+    savedPlots.forEach(displayPlot);
+}
+
+function displayPlot(plot) {
+    const plotsList = document.getElementById('plots');
+    const plotItem = document.createElement('li');
+    plotItem.className = 'bg-white p-4 rounded-lg shadow mb-4';
+    plotItem.innerHTML = `
+        <div>
+            <h3 class='text-xl font-semibold'>📖 Plot Summary: ${plot.plotSummary}</h3>
+            <p>🔍 <strong>Main Conflict:</strong> ${plot.mainConflict}</p>
+            <p>🗂️ <strong>Key Plot Points:</strong> ${plot.plotPoints}</p>
+            <p>🌟 <strong>Climax:</strong> ${plot.climax}</p>
+            <p>🔚 <strong>Resolution:</strong> ${plot.resolution}</p>
+            <button class='edit-plot text-blue-500 hover:text-blue-700' data-plot='${JSON.stringify(plot)}'>Edit</button>
+            <button class='delete-plot text-red-500 hover:text-red-700' data-summary='${plot.plotSummary}'>Delete</button>
+        </div>
+    `;
+    plotsList.appendChild(plotItem);
+
+    plotItem.querySelector('.delete-plot').addEventListener('click', (e) => {
+        deletePlot(e.target.dataset.summary);
+        plotItem.remove();
+    });
+}
+
+function deletePlot(plotSummary) {
+    let plots = JSON.parse(localStorage.getItem('plots') || '[]');
+    plots = plots.filter(plot => plot.plotSummary !== plotSummary);
+    localStorage.setItem('plots', JSON.stringify(plots));
+    showSuccess('Plot deleted successfully!');
 }
 
 async function generatePlotWithAI() {
     console.log('generatePlotWithAI function called');
     const apiKey = localStorage.getItem("openRouterApiKey");
-    const selectedModel = localStorage.getItem("selectedModel") || "openai/gpt-3.5-turbo";
+    const selectedModel = "openai/gpt-4o-mini";
     const genre = localStorage.getItem("genre");
     const storyLocation = localStorage.getItem("storyLocation");
     const storyTimeline = localStorage.getItem("storyTimeline");
@@ -116,7 +143,24 @@ async function generatePlotDetails(apiKey, model, genre, location, timeline) {
         messages: [
             { role: "system", content: "You are a creative writing assistant specializing in plot development. Respond with a JSON object containing plotSummary, mainConflict, plotPoints, climax, and resolution keys." },
             { role: "user", content: `Generate a plot for a ${genre} novel set in ${location} during ${timeline}. Include a plot summary, main conflict, key plot points, climax, and resolution.` }
-        ]
+        ],
+        response_format: {
+            type: 'json_schema',
+            json_schema: {
+                name: "plot_response",
+                schema: {
+                    type: "object",
+                    properties: {
+                        plotSummary: { type: "string" },
+                        mainConflict: { type: "string" },
+                        plotPoints: { type: "string" },
+                        climax: { type: "string" },
+                        resolution: { type: "string" }
+                    },
+                    required: ["plotSummary", "mainConflict", "plotPoints", "climax", "resolution"]
+                }
+            }
+        }
     };
 
     console.log("Sending request to OpenRouter API");

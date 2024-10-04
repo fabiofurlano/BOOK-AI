@@ -1,82 +1,235 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - Novel-Building Assistant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    animation: {
-                        gradient: 'gradient 8s linear infinite',
-                    },
-                    keyframes: {
-                        gradient: {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center'
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Settings - Novel-Building Assistant</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ["Poppins", "sans-serif"],
+                        },
+                        animation: {
+                            gradient: "gradient 8s linear infinite",
+                        },
+                        keyframes: {
+                            gradient: {
+                                "0%, 100%": {
+                                    "background-size": "200% 200%",
+                                    "background-position": "left center",
+                                },
+                                "50%": {
+                                    "background-size": "200% 200%",
+                                    "background-position": "right center",
+                                },
                             },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
-                        }
-                    }
-                }
+                        },
+                    },
+                },
+            };
+        </script>
+
+        <style>
+            .accordion-item {
+                transition: all 0.3s ease;
             }
-        }
-    </script>
-</head>
-<body class="bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 min-h-screen font-['Poppins'] flex items-center justify-center p-4">
-    <div id="app" class="w-full max-w-4xl bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden">
-        <header class="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-6 animate-gradient">
-            <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Settings</h1>
-        </header>
-        <main class="p-8">
-            <div class="space-y-6">
-                <div>
-                    <label for="api-key-input" class="block text-sm font-medium text-gray-700">OpenRouter API Key</label>
-                    <input type="password" id="api-key-input" name="api-key" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div>
-                    <button id="save-api-key" class="w-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
-                        Save API Key
-                    </button>
-                </div>
-                <div id="api-key-status" class="mt-2 text-sm text-gray-600"></div>
-                <div>
-                    <h2 class="text-lg font-semibold mb-2">Select AI Model</h2>
-                    <table class="w-full">
-                        <thead>
-                            <tr>
-                                <th class="px-4 py-2">Model</th>
-                                <th class="px-4 py-2">Context Limit</th>
-                                <th class="px-4 py-2">Prompt Cost</th>
-                                <th class="px-4 py-2">Completion Cost</th>
-                                <th class="px-4 py-2">Select</th>
-                            </tr>
-                        </thead>
-                        <tbody id="model-list">
+
+            .accordion-header {
+                transition: background-color 0.3s ease;
+            }
+
+            .accordion-header:hover {
+                background-color: #e6f2ff;
+            }
+
+            .accordion-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .accordion-content:not(.hidden) {
+                max-height: 300px;
+            }
+
+            .accordion-header img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+        </style>
+    </head>
+    <body
+        class="bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 min-h-screen font-sans flex items-center justify-center p-4"
+    >
+        <div
+            id="app"
+            class="w-full max-w-4xl bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden"
+        >
+            <header
+                class="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-6 animate-gradient"
+            >
+                <h1
+                    class="text-4xl font-bold text-center text-white drop-shadow-lg"
+                >
+                    ⚙️ Settings
+                </h1>
+            </header>
+            <main class="p-8">
+                <div class="space-y-6">
+                    <!-- API Key Input -->
+                    <div>
+                        <label
+                            for="api-key-input"
+                            class="block text-sm font-medium text-gray-700"
+                            >🔑 OpenRouter API Key</label
+                        >
+                        <input
+                            type="password"
+                            id="api-key-input"
+                            name="api-key"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        />
+                    </div>
+                    <!-- Save API Key Button -->
+                    <div>
+                        <button
+                            id="save-api-key"
+                            class="w-full bg-blue-300 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+                        >
+                            🔑 Save API Key
+                        </button>
+                    </div>
+                    <div
+                        id="api-key-status"
+                        class="mt-2 text-sm text-gray-600"
+                    ></div>
+                    <!-- Model Selection Table -->
+                    <div class="overflow-x-auto">
+                        <h2 class="text-lg font-semibold mb-2">
+                            🤖 Select AI Model
+                        </h2>
+                        <div id="model-accordion" class="space-y-4">
                             <!-- Model options will be populated here by JavaScript -->
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
+                    <div
+                        id="cost-display"
+                        class="mt-4 text-sm font-medium text-gray-700"
+                    ></div>
+                    <!-- Test Connection Button -->
+                    <div>
+                        <button
+                            id="test-connection"
+                            class="w-full bg-blue-300 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+                        >
+                            🔌 Test Connection
+                        </button>
+                    </div>
+                    <div
+                        id="connection-status"
+                        class="mt-2 text-sm text-gray-600"
+                    ></div>
+                    <!-- Usage Analytics Section -->
+                    <div class="mt-8 space-y-8">
+                        <h2
+                            class="text-2xl font-semibold text-center text-gray-800"
+                        >
+                            Usage Analytics
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h3
+                                    class="text-lg font-semibold mb-2 text-gray-700"
+                                >
+                                    Token Distribution
+                                </h3>
+                                <canvas id="tokenDistributionChart"></canvas>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h3
+                                    class="text-lg font-semibold mb-2 text-gray-700"
+                                >
+                                    Cost Breakdown
+                                </h3>
+                                <canvas id="costChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h3
+                                    class="text-lg font-semibold mb-2 text-gray-700"
+                                >
+                                    Credit Usage
+                                </h3>
+                                <p
+                                    class="text-base font-medium text-center text-blue-600"
+                                    id="totalCost"
+                                >
+                                    Loading credit information...
+                                </p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h3
+                                    class="text-lg font-semibold mb-2 text-gray-700"
+                                >
+                                    Credits Remaining
+                                </h3>
+                                <div class="flex items-center justify-center">
+                                    <canvas
+                                        id="balanceGauge"
+                                        class="w-32 h-16"
+                                    ></canvas>
+                                </div>
+                                <p
+                                    class="text-sm font-medium text-center text-blue-600 mt-2"
+                                    id="remainingBalance"
+                                >
+                                    $0.00 Credits Remaining
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="cost-display" class="mt-4 text-sm font-medium text-gray-700"></div>
-                <div>
-                    <button id="test-connection" class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
-                        Test Connection
-                    </button>
-                </div>
-                <div id="connection-status" class="mt-2 text-sm text-gray-600"></div>
+            </main>
+            <footer class="bg-gray-100 p-4 text-center">
+                <a
+                    href="index.html"
+                    class="text-blue-500 hover:text-blue-700 transition duration-300 ease-in-out"
+                    >🏠 Back to Home</a
+                >
+            </footer>
+        </div>
+        <!-- Modal Dialog for Connection Status -->
+        <div
+            id="connection-modal"
+            class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        >
+            <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+                <h2 class="text-lg font-semibold mb-2" id="modal-title">
+                    Connection Status
+                </h2>
+                <p id="modal-message" class="text-sm text-gray-600"></p>
+                <div
+                    id="modal-usage"
+                    class="mt-4 text-sm font-medium text-gray-700"
+                ></div>
+                <button
+                    id="close-modal"
+                    class="mt-4 w-full bg-blue-300 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+                >
+                    Close
+                </button>
             </div>
-        </main>
-        <footer class="bg-gray-100 p-4 text-center">
-            <a href="index.html" class="text-blue-500 hover:text-blue-700 transition duration-300 ease-in-out">Back to Home</a>
-        </footer>
-    </div>
-    <script src="settings.js"></script>
-</body>
+        </div>
+        <script src="settings.js"></script>
+    </body>
 </html>

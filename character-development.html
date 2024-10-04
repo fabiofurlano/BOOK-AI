@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Development - Novel-Building Assistant</title>
+    <title>Writing Workspace - Novel-Building Assistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        lightblue: '#E6F3FF',
-                        darkblue: '#3498db',
-                    },
                     animation: {
                         gradient: 'gradient 8s linear infinite',
                     },
@@ -33,81 +29,53 @@
             }
         }
     </script>
-    <script src="character-development.js" defer></script>
+    <script src="writing-workspace.js" defer></script>
 </head>
-<body id="character-development" class="bg-lightblue min-h-screen font-['Poppins'] flex items-center justify-center p-4">
-    <div id="app" class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
-        <header class="bg-gradient-to-r from-darkblue to-blue-500 p-6 animate-gradient">
-            <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Character Development</h1>
-            <div id="progress-bar" class="mt-4 bg-white bg-opacity-30 h-2 rounded-full"></div>
-        </header>
-        <main class="p-8">
-            <div id="character-form" class="space-y-6">
-                <div>
-                    <label for="character-name" class="block text-sm font-medium text-gray-700">Character Name</label>
-                    <input type="text" id="character-name" name="character-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="role-option cursor-pointer" data-role="protagonist">
-                        <img src="https://via.placeholder.com/150" alt="Protagonist" class="w-full h-32 object-cover rounded-lg">
-                        <p class="mt-2 text-center">Protagonist</p>
-                    </div>
-                    <div class="role-option cursor-pointer" data-role="antagonist">
-                        <img src="https://via.placeholder.com/150" alt="Antagonist" class="w-full h-32 object-cover rounded-lg">
-                        <p class="mt-2 text-center">Antagonist</p>
-                    </div>
-                    <div class="role-option cursor-pointer" data-role="supporting">
-                        <img src="https://via.placeholder.com/150" alt="Supporting Character" class="w-full h-32 object-cover rounded-lg">
-                        <p class="mt-2 text-center">Supporting Character</p>
-                    </div>
-                </div>
-                <div>
-                    <label for="character-age" class="block text-sm font-medium text-gray-700">Age</label>
-                    <input type="number" id="character-age" name="character-age" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div>
-                    <label for="character-appearance" class="block text-sm font-medium text-gray-700">Appearance</label>
-                    <textarea id="character-appearance" name="character-appearance" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
-                </div>
-                <div>
-                    <label for="character-background" class="block text-sm font-medium text-gray-700">Background</label>
-                    <textarea id="character-background" name="character-background" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
-                </div>
-                <div>
-                    <label for="character-personality" class="block text-sm font-medium text-gray-700">Personality Traits</label>
-                    <input type="text" id="character-personality" name="character-personality" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div>
-                    <label for="character-goals" class="block text-sm font-medium text-gray-700">Goals</label>
-                    <input type="text" id="character-goals" name="character-goals" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div>
-                    <label for="character-motivation" class="block text-sm font-medium text-gray-700">Motivation</label>
-                    <input type="text" id="character-motivation" name="character-motivation" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <img id="character-image" class="w-full h-64 object-cover rounded-lg mt-4" style="display: none;" alt="Generated character image">
-                <div class="flex space-x-4">
-                    <button id="add-character" class="flex-1 bg-gradient-to-r from-darkblue to-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
-                        Add Character
-                    </button>
-                    <button id="generate-character" class="flex-1 bg-gradient-to-r from-darkblue to-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
-                        Generate with AI
-                    </button>
-                </div>
+<body class="bg-gradient-to-br from-indigo-100 via-indigo-200 to-indigo-300 min-h-screen font-['Poppins'] flex flex-col">
+    <header class="bg-gradient-to-r from-indigo-300 via-indigo-400 to-indigo-500 p-6 animate-gradient">
+        <h1 class="text-4xl font-bold text-center text-white drop-shadow-lg">Writing Workspace</h1>
+        <div id="progress-bar" class="mt-4 bg-white bg-opacity-30 h-2 rounded-full"></div>
+    </header>
+    <main class="flex-grow flex p-4">
+        <div class="w-1/4 bg-white bg-opacity-80 backdrop-blur-lg rounded-lg shadow-lg p-4 mr-4 overflow-y-auto">
+            <h2 class="text-2xl font-semibold mb-4">Story Elements</h2>
+            <div id="story-info" class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">Story Information</h3>
+                <!-- Story info will be dynamically added here -->
             </div>
-            <div id="character-list" class="mt-8">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Your Characters</h2>
-                <ul id="characters" class="space-y-4"></ul>
+            <div id="characters-list" class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">Characters</h3>
+                <!-- Characters will be dynamically added here -->
             </div>
-            <div class="mt-8">
-                <button id="next-step" class="w-full bg-gradient-to-r from-darkblue to-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
-                    Next: Plot Development
-                </button>
+            <div id="plots-list" class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">Plots</h3>
+                <!-- Plots will be dynamically added here -->
             </div>
-        </main>
-        <footer class="bg-gray-100 p-4 text-center text-gray-600">
-            <p>&copy; 2023 Novel-Building Assistant | <a href="settings.html" class="text-blue-500 hover:text-blue-700">Settings</a> | <a href="index.html" class="text-blue-500 hover:text-blue-700">Home</a></p>
-        </footer>
-    </div>
+            <div id="ai-info" class="mb-6">
+                <h3 class="text-xl font-semibold mb-2">AI Information</h3>
+                <!-- AI info will be dynamically added here -->
+            </div>
+        </div>
+        <div class="flex-grow bg-white bg-opacity-80 backdrop-blur-lg rounded-lg shadow-lg p-4 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-semibold">Write Your Story</h2>
+                <div id="word-count" class="text-gray-600">Words: 0</div>
+            </div>
+            <div class="mb-4">
+                <button id="create-chapter" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out">Create New Chapter</button>
+            </div>
+            <div id="chapters-container" class="mb-4">
+                <!-- Chapters will be dynamically added here -->
+            </div>
+            <textarea id="story-content" class="flex-grow p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Start writing your story here..."></textarea>
+            <div class="mt-4 flex justify-between">
+                <button id="save-story" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out">Save Story</button>
+                <button id="ai-assist" class="bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 transition duration-300 ease-in-out">AI Assist</button>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-gray-100 p-4 text-center text-gray-600">
+        <p>&copy; 2023 Novel-Building Assistant | <a href="settings.html" class="text-blue-500 hover:text-blue-700">Settings</a> | <a href="index.html" class="text-blue-500 hover:text-blue-700">Home</a></p>
+    </footer>
 </body>
 </html>
