@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Character Setup - Novel-Building Assistant</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="tailwind-config.js"></script>
+        <script src="character_setup.js" defer></script>
+    </head>
+    <body
+        class="bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 min-h-screen font-['Poppins'] flex items-center justify-center p-4"
+    >
+        <div
+            class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden flex"
+        >
+            <!-- Sidebar -->
+            <aside class="w-1/4 bg-gray-100 p-4 rounded-l-3xl">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Story Elements</h3>
+                <p id="story-language" class="text-gray-700">🌍 Language: Not Selected</p>
+                <p id="story-genre" class="text-gray-700 mt-2">📚 Genre: Not Selected</p>
+                <p id="story-setting" class="text-gray-700 mt-2">🏙️ Setting: Not Selected</p>
+                <p id="story-timeline" class="text-gray-700 mt-2">🕒 Timeline: Not Selected</p>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="w-3/4">
+                <header
+                    class="bg-gradient-to-r from-blue-300 to-blue-500 p-6 animate-gradient"
+                >
+                    <h1
+                        class="text-4xl font-bold text-center text-white drop-shadow-lg"
+                    >
+                        Character Setup
+                    </h1>
+                </header>
+                <main class="p-8">
+                    <div class="mb-8">
+                        <label
+                            for="character-count"
+                            class="block text-lg font-medium text-gray-800 mb-2"
+                        >👥 How many characters?</label
+                        >
+                        <input
+                            type="number"
+                            id="character-count"
+                            name="character-count"
+                            min="1"
+                            max="10"
+                            class="mt-1 block w-full rounded-lg border-2 border-blue-300 shadow-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg px-4 py-2"
+                        />
+                    </div>
+                    <div id="character-fields-container" class="space-y-6">
+                        <!-- Character fields will be dynamically added here -->
+                    </div>
+                    <div class="flex justify-end mt-8">
+                        <button
+                            id="save-button"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out"
+                        >
+                            💾 Save Characters
+                        </button>
+                    </div>
+                </main>
+            </div>
+
+            <!-- Template for character input fields -->
+            <template id="character-template">
+                <div class="mb-6 p-4 border rounded-lg shadow-md">
+                    <div class="mb-4">
+                        <label
+                            for="character-name"
+                            class="block text-sm font-medium text-gray-700"
+                            >📛 Character Name</label
+                        >
+                        <input
+                            type="text"
+                            name="character-name"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="character-role"
+                            class="block text-sm font-medium text-gray-700"
+                            >🎭 Character Role</label
+                        >
+                        <select
+                            name="character-role"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        >
+                            <option value="protagonist">🦸 Protagonist</option>
+                            <option value="antagonist">🦹‍♂️ Antagonist</option>
+                            <option value="supporting">👥 Supporting</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="character-age"
+                            class="block text-sm font-medium text-gray-700"
+                            >🎂 Character Age</label
+                        >
+                        <input
+                            type="number"
+                            name="character-age"
+                            min="0"
+                            max="150"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="character-gender"
+                            class="block text-sm font-medium text-gray-700"
+                            >⚧️ Character Gender</label
+                        >
+                        <select
+                            name="character-gender"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        >
+                            <option value="male">👨 Male</option>
+                            <option value="female">👩 Female</option>
+                            <option value="non-binary">🧑 Non-binary</option>
+                            <option value="other">👤 Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="character-description"
+                            class="block text-sm font-medium text-gray-700"
+                            >📝 Character Description</label
+                        >
+                        <textarea
+                            name="character-description"
+                            rows="4"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        ></textarea>
+                    </div>
+                    <button
+                        class="ai-populate-button bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out mt-4"
+                    >
+                        🤖 Generate AI Description
+                    </button>
+                </div>
+            </template>
+    </body>
+</html>

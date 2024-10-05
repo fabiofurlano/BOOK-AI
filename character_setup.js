@@ -18,21 +18,12 @@ function generateCharacterFields(numCharacters) {
       input.id = `${input.name}-${i}`;
     });
 
-    const aiPopulateButton = document.createElement("button");
-    aiPopulateButton.textContent = "Generate with AI 🤖";
-    aiPopulateButton.className =
-      "ai-populate-button mt-2 bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded";
-    aiPopulateButton.addEventListener("click", () =>
-      populateCharacterFields(i),
-    );
-
-    const descriptionField = clone.querySelector(
-      "[name='character-description']",
-    );
-    descriptionField.parentNode.insertBefore(
-      aiPopulateButton,
-      descriptionField.nextSibling,
-    );
+    const aiPopulateButton = clone.querySelector(".ai-populate-button");
+    aiPopulateButton.dataset.characterIndex = i;
+    aiPopulateButton.addEventListener("click", (event) => {
+      const index = parseInt(event.target.dataset.characterIndex);
+      populateCharacterFields(index);
+    });
 
     characterFieldsContainer.appendChild(clone);
   }
@@ -123,6 +114,23 @@ Please provide a comprehensive character description including personality trait
 }
 // Initialize the page and set up event listeners
 document.addEventListener("DOMContentLoaded", function () {
+  function loadStoryElements() {
+    const language = localStorage.getItem("selectedLanguage") || "Not Selected";
+    const genre = localStorage.getItem("selectedGenre") || "Not Selected";
+    const setting = localStorage.getItem("selectedSetting") || "Not Selected";
+    const timeline = localStorage.getItem("selectedTimeline") || "Not Selected";
+
+    document.getElementById("story-language").textContent =
+      `🌍 Language: ${language}`;
+    document.getElementById("story-genre").textContent = `📚 Genre: ${genre}`;
+    document.getElementById("story-setting").textContent =
+      `🏙️ Setting: ${setting}`;
+    document.getElementById("story-timeline").textContent =
+      `🕰️ Timeline: ${timeline}`;
+  }
+
+  loadStoryElements();
+
   characterFieldsContainer = document.getElementById(
     "character-fields-container",
   );
