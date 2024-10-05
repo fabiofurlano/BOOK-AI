@@ -10,32 +10,7 @@
         />
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        fontFamily: {
-                            sans: ["Poppins", "sans-serif"],
-                        },
-                        animation: {
-                            gradient: "gradient 8s linear infinite",
-                        },
-                        keyframes: {
-                            gradient: {
-                                "0%, 100%": {
-                                    "background-size": "200% 200%",
-                                    "background-position": "left center",
-                                },
-                                "50%": {
-                                    "background-size": "200% 200%",
-                                    "background-position": "right center",
-                                },
-                            },
-                        },
-                    },
-                },
-            };
-        </script>
+        <script src="tailwind-config.js"></script>
 
         <style>
             .accordion-item {
@@ -212,6 +187,9 @@
         <div
             id="connection-modal"
             class="fixed inset-0 flex items-center justify-center z-50 hidden"
+            role="dialog"
+            aria-labelledby="modal-title"
+            aria-hidden="true"
         >
             <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
                 <h2 class="text-lg font-semibold mb-2" id="modal-title">
@@ -231,5 +209,54 @@
             </div>
         </div>
         <script src="settings.js"></script>
+        <script>
+            // Modal Focus Trapping and Keyboard Handling
+            const modal = document.getElementById("connection-modal");
+            const closeModalButton = document.getElementById("close-modal");
+
+            function trapFocus(element) {
+                const focusableElements = element.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+                );
+                const firstElement = focusableElements[0];
+                const lastElement =
+                    focusableElements[focusableElements.length - 1];
+
+                element.addEventListener("keydown", function (e) {
+                    if (e.key === "Tab") {
+                        if (e.shiftKey) {
+                            if (document.activeElement === firstElement) {
+                                e.preventDefault();
+                                lastElement.focus();
+                            }
+                        } else {
+                            if (document.activeElement === lastElement) {
+                                e.preventDefault();
+                                firstElement.focus();
+                            }
+                        }
+                    }
+                    if (e.key === "Escape") {
+                        closeModal();
+                    }
+                });
+            }
+
+            function openModal() {
+                modal.classList.remove("hidden");
+                modal.setAttribute("aria-hidden", "false");
+                closeModalButton.focus();
+                trapFocus(modal);
+            }
+
+            function closeModal() {
+                modal.classList.add("hidden");
+                modal.setAttribute("aria-hidden", "true");
+            }
+
+            closeModalButton.addEventListener("click", closeModal);
+
+            // Example usage: openModal(); to show the modal
+        </script>
     </body>
 </html>

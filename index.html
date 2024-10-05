@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,34 +10,7 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
             rel="stylesheet"
         />
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            lightblue: "#ADD8E6",
-                            darkblue: "#3498db",
-                        },
-                        animation: {
-                            gradient: "gradient 8s linear infinite",
-                        },
-                        keyframes: {
-                            gradient: {
-                                "0%, 100%": {
-                                    "background-size": "200% 200%",
-                                    "background-position": "left center",
-                                },
-                                "50%": {
-                                    "background-size": "200% 200%",
-                                    "background-position": "right center",
-                                },
-                            },
-                        },
-                    },
-                },
-            };
-        </script>
+
         <style>
             .genre-option.active {
                 border-color: #3498db;
