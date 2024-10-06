@@ -1,0 +1,34 @@
+<template id="character-template">
+    <div class="mb-6 p-4 border rounded-lg shadow-md">
+        <div class="mb-4">
+            <label for="character-name" class="block text-sm font-medium text-gray-700">Character Name</label>
+            <input type="text" name="character-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        </div>
+        <div class="mb-4">
+            <label for="character-role" class="block text-sm font-medium text-gray-700">Character Role</label>
+            <select name="character-role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option value="protagonist">Protagonist</option>
+                <option value="antagonist">Antagonist</option>
+                <option value="supporting">Supporting</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="character-age" class="block text-sm font-medium text-gray-700">Character Age</label>
+            <input type="number" name="character-age" min="0" max="150" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+        </div>
+        <div class="mb-4">
+            <label for="character-gender" class="block text-sm font-medium text-gray-700">Character Gender</label>
+            <select name="character-gender" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="non-binary">Non-binary</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="character-description" class="block text-sm font-medium text-gray-700">Character Description</label>
+            <textarea name="character-description" rows="4" class="mt-1 block w-full rounded-lg border-2 border-blue-300 shadow-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg px-4 py-2"></textarea>
+        </div>
+        <button class="ai-populate-button w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out mt-4" data-character-index="">Generate AI Description</button>
+    </div>
+</template>

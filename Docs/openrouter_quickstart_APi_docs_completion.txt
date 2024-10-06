@@ -1,0 +1,57 @@
+Unknown date
+Unknown author
+Quick Start
+To get started, you can use OpenRouter via API like this:
+
+typescriptpythonrubyshell
+Copy
+fetch("https://openrouter.ai/api/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+    "HTTP-Referer": `${YOUR_SITE_URL}`, // Optional, for including your app on openrouter.ai rankings.
+    "X-Title": `${YOUR_SITE_NAME}`, // Optional. Shows in rankings on openrouter.ai.
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "model": "openai/gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is the meaning of life?"
+      }
+    ]
+  })
+});
+You can also use OpenRouter with OpenAI's client API:
+
+typescriptpython
+Copy
+import OpenAI from "openai"
+
+const openai = new OpenAI({
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: $OPENROUTER_API_KEY,
+  defaultHeaders: {
+    "HTTP-Referer": $YOUR_SITE_URL, // Optional, for including your app on openrouter.ai rankings.
+    "X-Title": $YOUR_SITE_NAME, // Optional. Shows in rankings on openrouter.ai.
+  }
+})
+
+async function main() {
+  const completion = await openai.chat.completions.create({
+    model: "openai/gpt-3.5-turbo",
+    messages: [
+      {
+        "role": "user",
+        "content": "What is the meaning of life?"
+      }
+    ]
+  })
+
+  console.log(completion.choices[0].message)
+}
+main()
+Viewed using Just Read
+
+Report an error
