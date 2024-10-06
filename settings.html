@@ -13,6 +13,7 @@
         <script src="tailwind-config.js"></script>
 
         <style>
+            /* Existing styles remain unchanged */
             .accordion-item {
                 transition: all 0.3s ease;
             }
@@ -39,6 +40,72 @@
                 max-width: 100%;
                 max-height: 100%;
                 object-fit: contain;
+            }
+            /* Card styles */
+            .model-card {
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 16px;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                box-sizing: border-box;
+                transition: box-shadow 0.3s ease;
+            }
+            .model-card img {
+                width: 50px;
+                height: 50px;
+                margin-right: 10px;
+            }
+            .model-card label {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                font-size: 14px; /* Reduced font size */
+            }
+            .model-card input[type="radio"] {
+                margin-right: 5px;
+            }
+            .model-card input[type="radio"]:checked + label {
+                font-weight: bold;
+            }
+            .model-card:hover {
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .model-card.selected {
+                box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+                border-color: #3498db;
+            }
+            /* Grid layout for better responsiveness */
+            #model-accordion {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                grid-gap: 1rem;
+            }
+            /* Button styles */
+            #save-api-key, #test-connection {
+                padding: 10px 20px;
+                font-size: 16px;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+            #save-api-key:hover, #test-connection:hover {
+                background-color: #2980b9;
+                transform: translateY(-2px);
+            }
+            /* Improved spacing and font sizes */
+            .space-y-6 > * {
+                margin-bottom: 1.5rem;
+            }
+            h2, h3 {
+                font-family: 'Poppins', sans-serif;
+            }
+            label {
+                font-family: 'Poppins', sans-serif;
+                font-size: 14px; /* Reduced font size */
+            }
+            body {
+                font-family: 'Poppins', sans-serif;
             }
         </style>
     </head>
@@ -78,7 +145,7 @@
                     <div>
                         <button
                             id="save-api-key"
-                            class="w-full bg-blue-300 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+                            class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
                         >
                             🔑 Save API Key
                         </button>
@@ -87,13 +154,32 @@
                         id="api-key-status"
                         class="mt-2 text-sm text-gray-600"
                     ></div>
-                    <!-- Model Selection Table -->
+                    <!-- Model Selection Cards -->
                     <div class="overflow-x-auto">
                         <h2 class="text-lg font-semibold mb-2">
                             🤖 Select AI Model
                         </h2>
-                        <div id="model-accordion" class="space-y-4">
+                        <div id="model-accordion" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             <!-- Model options will be populated here by JavaScript -->
+                            <div class="model-card">
+                                <img src="LLMS_Logos/claude-logo-black.svg" alt="Claude">
+                                <div>
+                                    <label for="model-claude">
+                                        <input type="radio" id="model-claude" name="model" value="claude">
+                                        Claude
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="model-card">
+                                <img src="LLMS_Logos/chat-gpt-logo-black.svg" alt="ChatGPT">
+                                <div>
+                                    <label for="model-chatgpt">
+                                        <input type="radio" id="model-chatgpt" name="model" value="chatgpt">
+                                        ChatGPT
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Add more model cards as needed -->
                         </div>
                     </div>
                     <div
@@ -104,7 +190,7 @@
                     <div>
                         <button
                             id="test-connection"
-                            class="w-full bg-blue-300 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+                            class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
                         >
                             🔌 Test Connection
                         </button>
@@ -234,8 +320,7 @@
                     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
                 );
                 const firstElement = focusableElements[0];
-                const lastElement =
-                    focusableElements[focusableElements.length - 1];
+                const lastElement = focusableElements[focusableElements.length - 1];
 
                 element.addEventListener("keydown", function (e) {
                     if (e.key === "Tab") {
