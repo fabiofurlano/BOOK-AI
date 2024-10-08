@@ -24,12 +24,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Update Sidebar with current selections
+    updateSidebar();
+  }
+
+  function updateSidebar() {
     storyLanguageElement.textContent = `🌍 Language: ${selectedLanguage ? capitalizeFirstLetter(selectedLanguage) : "Not Selected"}`;
     storyGenreElement.textContent = `📚 Genre: ${selectedGenre ? capitalizeFirstLetter(selectedGenre) : "Not Selected"}`;
   }
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function dispatchStoryElementEvent(elementType, value) {
+    const event = new CustomEvent("storyElementUpdated", {
+      detail: { type: elementType, value: value },
+      bubbles: true,
+      composed: true
+    });
+    document.dispatchEvent(event);
   }
 
   languageOptions.forEach((option) => {
@@ -47,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       option.querySelector("img").classList.add("active");
 
-      storyLanguageElement.textContent = `🌍 Language: ${option.querySelector("label").textContent.trim()}`;
+      dispatchStoryElementEvent("language", selectedLanguage);
       checkSelection();
     });
   });
@@ -61,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Store selected genre in local storage
       localStorage.setItem("selectedGenre", selectedGenre);
 
-      storyGenreElement.textContent = `📚 Genre: ${option.querySelector("p").textContent.trim()}`;
+      dispatchStoryElementEvent("genre", selectedGenre);
       checkSelection();
     });
 
@@ -75,10 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   startButton.addEventListener("click", () => {
-    // Here you would typically navigate to the next page or start the novel building process
-    console.log(
-      `Starting novel with Language: ${selectedLanguage} and Genre: ${selectedGenre}`,
-    );
+    // Navigate to the story-setting.html page
+    window.location.href = "story-setting.html";
   });
 
   // Initialize with default or previously selected language
@@ -87,16 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   if (initialLanguageOption) {
     initialLanguageOption.querySelector("img").classList.add("active");
-    storyLanguageElement.textContent = `🌍 Language: ${initialLanguageOption.querySelector("label").textContent.trim()}`;
+    dispatchStoryElementEvent("language", selectedLanguage);
   }
-  startButton.addEventListener("click", () => {
-    // Save selected language and genre to localStorage
-    localStorage.setItem("selectedLanguage", selectedLanguage);
-    localStorage.setItem("selectedGenre", selectedGenre);
 
-    // Navigate to the story-setting.html page
-    window.location.href = "story-setting.html";
-  });
   // Initialize with previously selected genre if available
   if (selectedGenre) {
     const initialGenreOption = document.querySelector(
@@ -104,9 +108,20 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     if (initialGenreOption) {
       initialGenreOption.classList.add("active");
-      storyGenreElement.textContent = `📚 Genre: ${initialGenreOption.querySelector("p").textContent.trim()}`;
+      dispatchStoryElementEvent("genre", selectedGenre);
     }
   }
+
+  // Listen for story element updates
+  document.addEventListener("storyElementUpdated", (event) => {
+    const { type, value } = event.detail;
+    if (type === "language") {
+      selectedLanguage = value;
+    } else if (type === "genre") {
+      selectedGenre = value;
+    }
+    updateSidebar();
+  });
 
   checkSelection();
 });

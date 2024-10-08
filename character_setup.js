@@ -1,16 +1,37 @@
-// Import necessary modules and initialize variables
-
+// Initialize variables
 let characterCount = 0;
 let characterFieldsContainer;
-let generateFieldsButton;
-let saveButton;
-let continueButton;
-// Function to generate character fields
-function generateCharacterFields(numCharacters) {
+let manualModeButton;
+let aiModeButton;
+let characterCountInput;
+let selectedLanguage;
+let selectedGenre;
+let selectedLocation;
+let selectedTimeline;
+
+// Function to generate character fields in Manual Mode
+function generateCharacterFieldsManual(numCharacters) {
   characterFieldsContainer.innerHTML = ""; // Clear previous fields
 
   for (let i = 0; i < numCharacters; i++) {
-    const template = document.getElementById("character-template");
+    const template = document.getElementById("character-template-manual");
+    const clone = template.content.cloneNode(true);
+
+    const inputs = clone.querySelectorAll("input, select, textarea");
+    inputs.forEach((input) => {
+      input.id = `${input.name}-${i}`;
+    });
+
+    characterFieldsContainer.appendChild(clone);
+  }
+}
+
+// Function to generate character fields in AI-Assisted Mode
+function generateCharacterFieldsAI(numCharacters) {
+  characterFieldsContainer.innerHTML = ""; // Clear previous fields
+
+  for (let i = 0; i < numCharacters; i++) {
+    const template = document.getElementById("character-template-ai");
     const clone = template.content.cloneNode(true);
 
     const inputs = clone.querySelectorAll("input, select, textarea");
@@ -29,25 +50,6 @@ function generateCharacterFields(numCharacters) {
   }
 }
 
-// Function to save character data
-function saveCharacterData() {
-  const characters = [];
-
-  for (let i = 0; i < characterCount; i++) {
-    characters.push({
-      name: document.getElementById(`character-name-${i}`).value,
-      role: document.getElementById(`character-role-${i}`).value,
-      age: document.getElementById(`character-age-${i}`).value,
-      gender: document.getElementById(`character-gender-${i}`).value,
-      description:
-        document.getElementById(`character-description-${i}`)?.value || "",
-    });
-  }
-
-  const jsonOutput = { characters: characters };
-  localStorage.setItem("characterData", JSON.stringify(jsonOutput));
-  console.log("Character data saved:", JSON.stringify(jsonOutput));
-}
 // Function to populate fields from AI output
 async function populateCharacterFields(index) {
   const aiResponse = await fetchAIResponse(index);
@@ -80,8 +82,12 @@ Name: ${name}
 Role: ${role}
 Age: ${age}
 Gender: ${gender}
+Story Language: ${selectedLanguage}
+Story Genre: ${selectedGenre}
+Story Location: ${selectedLocation}
+Story Timeline: ${selectedTimeline}
 
-Please provide a comprehensive character description including personality traits, background, and relevant details that fit the given attributes.`;
+Please provide a comprehensive character description including personality traits, background, and relevant details that fit the given attributes and story elements.`;
 
   try {
     const response = await fetch(
@@ -112,40 +118,71 @@ Please provide a comprehensive character description including personality trait
     };
   }
 }
+
+// Function to load story elements from localStorage
+function loadStoryElements() {
+  selectedLanguage = localStorage.getItem("selectedLanguage") || "Not Selected";
+  selectedGenre = localStorage.getItem("selectedGenre") || "Not Selected";
+  selectedLocation = localStorage.getItem("selectedLocation") || "Not Selected";
+  selectedTimeline = localStorage.getItem("selectedTimeline") || "Not Selected";
+
+  updateSidebar();
+}
+
+function updateSidebar() {
+  document.getElementById("story-language").textContent = `🌍 Language: ${selectedLanguage}`;
+  document.getElementById("story-genre").textContent = `📚 Genre: ${selectedGenre}`;
+  document.getElementById("story-location").textContent = `🏙️ Location: ${selectedLocation}`;
+  document.getElementById("story-timeline").textContent = `🕰️ Timeline: ${selectedTimeline}`;
+}
+
 // Initialize the page and set up event listeners
 document.addEventListener("DOMContentLoaded", function () {
-  function loadStoryElements() {
-    const language = localStorage.getItem("selectedLanguage") || "Not Selected";
-    const genre = localStorage.getItem("selectedGenre") || "Not Selected";
-    const setting = localStorage.getItem("selectedSetting") || "Not Selected";
-    const timeline = localStorage.getItem("selectedTimeline") || "Not Selected";
-
-    document.getElementById("story-language").textContent =
-      `🌍 Language: ${language}`;
-    document.getElementById("story-genre").textContent = `📚 Genre: ${genre}`;
-    document.getElementById("story-setting").textContent =
-      `🏙️ Setting: ${setting}`;
-    document.getElementById("story-timeline").textContent =
-      `🕰️ Timeline: ${timeline}`;
-  }
-
   loadStoryElements();
 
   characterFieldsContainer = document.getElementById(
     "character-fields-container",
   );
-  saveButton = document.getElementById("save-button");
+  characterCountInput = document.getElementById("character-count");
+  manualModeButton = document.getElementById("manual-mode-button");
+  aiModeButton = document.getElementById("ai-mode-button");
 
-  const characterCountInput = document.getElementById("character-count");
   characterCountInput.value = 1; // Set default character count to 1
   characterFieldsContainer.style.display = "none"; // Hide character fields initially
 
-  // Event listener for save characters button
-  saveButton.addEventListener("click", function () {
+  // Event listener for Manual Mode button
+  manualModeButton.addEventListener("click", function () {
     characterCount = parseInt(characterCountInput.value);
-    generateCharacterFields(characterCount);
+    generateCharacterFieldsManual(characterCount);
     characterFieldsContainer.style.display = "block";
-    saveCharacterData();
+  });
+
+  // Event listener for AI-Assisted Mode button
+  aiModeButton.addEventListener("click", function () {
+    characterCount = parseInt(characterCountInput.value);
+    generateCharacterFieldsAI(characterCount);
+    characterFieldsContainer.style.display = "block";
+  });
+
+  // Listen for story element updates
+  document.addEventListener('storyElementUpdated', function(e) {
+    console.log('Event received:', e.detail);
+    const { type, value } = e.detail;
+    switch (type) {
+      case "language":
+        selectedLanguage = value;
+        break;
+      case "genre":
+        selectedGenre = value;
+        break;
+      case "location":
+        selectedLocation = value;
+        break;
+      case "timeline":
+        selectedTimeline = value;
+        break;
+    }
+    updateSidebar();
   });
 
   console.log("DOM fully loaded and parsed");

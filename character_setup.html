@@ -46,8 +46,8 @@
                         <p id="story-genre" class="text-gray-700 mt-2">
                             📚 Genre: Not Selected
                         </p>
-                        <p id="story-setting" class="text-gray-700 mt-2">
-                            🏙️ Setting: Not Selected
+                        <p id="story-location" class="text-gray-700 mt-2">
+                            🏙️ Location: Not Selected
                         </p>
                         <p id="story-timeline" class="text-gray-700 mt-2">
                             🕰️ Timeline: Not Selected
@@ -75,6 +75,20 @@
                                 max="10"
                                 class="mt-1 block w-full rounded-lg border-2 border-blue-300 shadow-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg px-4 py-2"
                             />
+                            <div class="flex space-x-4 my-6" id="mode-buttons">
+                                <button
+                                    id="manual-mode-button"
+                                    class="bg-gradient-to-r from-green-500 to-teal-500 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                                >
+                                    Manual Mode
+                                </button>
+                                <button
+                                    id="ai-mode-button"
+                                    class="bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                                >
+                                    AI-Assisted Mode
+                                </button>
+                            </div>
                         </div>
                         <div id="character-fields-container" class="space-y-6">
                             <!-- Character fields will be dynamically added here -->
@@ -85,18 +99,12 @@
                         >
                             Please enter the details for your characters.
                         </p>
-                        <button
-                            id="save-button"
-                            class="w-full bg-gradient-to-r from-darkblue to-lightblue text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out mt-4"
-                        >
-                            💾 Save Characters
-                        </button>
                     </div>
                 </div>
             </main>
 
             <!-- Template for character input fields -->
-            <template id="character-template">
+            <template id="character-template-manual">
                 <div class="mb-6 p-4 border rounded-lg shadow-md">
                     <div class="mb-4">
                         <label
@@ -167,11 +175,81 @@
                             class="mt-1 block w-full rounded-lg border-2 border-blue-300 shadow-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg px-4 py-2"
                         ></textarea>
                     </div>
+                </div>
+            </template>
+
+            <template id="character-template-ai">
+                <div class="mb-6 p-4 border rounded-lg shadow-md">
+                    <div class="mb-4">
+                        <label
+                            for="character-name"
+                            class="block text-sm font-medium text-gray-700"
+                            >📛 Character Name (AI 🤖)</label
+                        >
+                        <input
+                            type="text"
+                            name="character-name"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            readonly
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="character-role"
+                            class="block text-sm font-medium text-gray-700"
+                            >🎭 Character Role (AI 🤖)</label
+                        >
+                        <input
+                            type="text"
+                            name="character-role"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            readonly
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="character-age"
+                            class="block text-sm font-medium text-gray-700"
+                            >🎂 Character Age (AI 🤖)</label
+                        >
+                        <input
+                            type="text"
+                            name="character-age"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            readonly
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="character-gender"
+                            class="block text-sm font-medium text-gray-700"
+                            >⚧️ Character Gender (AI 🤖)</label
+                        >
+                        <input
+                            type="text"
+                            name="character-gender"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            readonly
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="character-description"
+                            class="block text-sm font-medium text-gray-700"
+                            >📝 Character Description (AI 🤖)</label
+                        >
+                        <textarea
+                            name="character-description"
+                            rows="4"
+                            class="mt-1 block w-full rounded-lg border-2 border-blue-300 shadow-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-lg px-4 py-2"
+                            readonly
+                        ></textarea>
+                    </div>
                     <button
                         class="ai-populate-button w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out mt-4"
                         data-character-index=""
                     >
-                        🤖 Generate AI Description
+                        🤖 Regenerate AI Description
                     </button>
                 </div>
             </template>

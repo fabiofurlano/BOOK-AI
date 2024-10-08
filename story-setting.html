@@ -38,12 +38,17 @@
                 >
                     Story Setting and Timeline
                 </h1>
-                <div id="progress-bar" class="mt-4 bg-white bg-opacity-30 h-2 rounded-full"></div>
+                <div
+                    id="progress-bar"
+                    class="mt-4 bg-white bg-opacity-30 h-2 rounded-full"
+                ></div>
             </header>
             <main class="p-8">
                 <div class="flex gap-8">
                     <!-- Sidebar Section -->
-                    <aside class="w-1/4 bg-gray-100 p-6 rounded-xl shadow-md sticky top-4">
+                    <aside
+                        class="w-1/4 bg-gray-100 p-6 rounded-xl shadow-md sticky top-4"
+                    >
                         <h3 class="text-xl font-semibold mb-4 text-gray-800">
                             Story Elements
                         </h3>
@@ -53,8 +58,8 @@
                         <p id="story-genre" class="text-gray-700 mt-2">
                             📚 Genre: Not Selected
                         </p>
-                        <p id="story-setting" class="text-gray-700 mt-2">
-                            🏙️ Setting: Not Selected
+                        <p id="story-location" class="text-gray-700 mt-2">
+                            🏙️ Location: Not Selected
                         </p>
                         <p id="story-timeline" class="text-gray-700 mt-2">
                             🕰️ Timeline: Not Selected
@@ -64,164 +69,363 @@
                     <!-- Main Content Section -->
                     <div class="w-3/4">
                         <div class="mb-8">
-                            <h2 class="text-3xl font-semibold mb-6 text-gray-800">
+                            <h2
+                                class="text-3xl font-semibold mb-6 text-gray-800"
+                            >
                                 Select Your Story's Location
                             </h2>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                                <div class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-location="urban">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story in a bustling city environment.
+                            <div
+                                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6"
+                            >
+                                <div
+                                    class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-location="urban"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story in a bustling city
+                                        environment.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🏙️
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Urban</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Urban
+                                    </p>
                                 </div>
-                                <div class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-location="rural">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story in a peaceful countryside setting.
+                                <div
+                                    class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-location="rural"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story in a peaceful countryside
+                                        setting.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🌾
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Rural</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Rural
+                                    </p>
                                 </div>
-                                <div class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-location="fantasy-world">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Create your own magical realm for your story.
+                                <div
+                                    class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-location="fantasy-world"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Create your own magical realm for your
+                                        story.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🏰
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Fantasy World</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Fantasy World
+                                    </p>
                                 </div>
-                                <div class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-location="space">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story in the vast expanse of outer space.
+                                <div
+                                    class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-location="space"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story in the vast expanse of
+                                        outer space.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🚀
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Space</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Space
+                                    </p>
                                 </div>
-                                <div class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-location="desert">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story in a vast desert landscape.
+                                <div
+                                    class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-location="desert"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story in a vast desert
+                                        landscape.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🏜️
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Desert</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Desert
+                                    </p>
                                 </div>
-                                <div class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-location="mountain">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story in a majestic mountain range.
+                                <div
+                                    class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-location="mountain"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story in a majestic mountain
+                                        range.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🏔️
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Mountain</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Mountain
+                                    </p>
                                 </div>
-                                <div class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-location="ocean">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story in a serene ocean environment.
+                                <div
+                                    class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-location="ocean"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story in a serene ocean
+                                        environment.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🌊
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Ocean</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Ocean
+                                    </p>
                                 </div>
-                                <div class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-location="space-station">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story in a futuristic space station.
+                                <div
+                                    class="location-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-location="space-station"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story in a futuristic space
+                                        station.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🛰️
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Space Station</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Space Station
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-8">
-                            <h2 class="text-3xl font-semibold mb-6 text-gray-800">
+                            <h2
+                                class="text-3xl font-semibold mb-6 text-gray-800"
+                            >
                                 Select Your Story's Timeline
                             </h2>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                                <div class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-timeline="past">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story in a historical or bygone era.
+                            <div
+                                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6"
+                            >
+                                <div
+                                    class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-timeline="past"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story in a historical or bygone
+                                        era.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         📜
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Past</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Past
+                                    </p>
                                 </div>
-                                <div class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-timeline="present">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story in the current time period.
+                                <div
+                                    class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-timeline="present"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story in the current time
+                                        period.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🌟
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Present</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Present
+                                    </p>
                                 </div>
-                                <div class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-timeline="future">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
+                                <div
+                                    class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-timeline="future"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
                                         Set your story in a future time period.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🚀
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Future</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Future
+                                    </p>
                                 </div>
-                                <div class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-timeline="multiple">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
-                                        Set your story across multiple time periods.
+                                <div
+                                    class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-timeline="multiple"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
+                                        Set your story across multiple time
+                                        periods.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🕰️
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Multiple Eras</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Multiple Eras
+                                    </p>
                                 </div>
-                                <div class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-timeline="distant-past">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
+                                <div
+                                    class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-timeline="distant-past"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
                                         Set your story in a distant past era.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🏺
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Distant Past</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Distant Past
+                                    </p>
                                 </div>
-                                <div class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-timeline="near-future">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
+                                <div
+                                    class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-timeline="near-future"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
                                         Set your story in a near future era.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🔮
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Near Future</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Near Future
+                                    </p>
                                 </div>
-                                <div class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-timeline="alternate-timeline">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
+                                <div
+                                    class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-timeline="alternate-timeline"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
                                         Set your story in an alternate timeline.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         🌌
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Alternate Timeline</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Alternate Timeline
+                                    </p>
                                 </div>
-                                <div class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300" data-timeline="timeless">
-                                    <div class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10">
+                                <div
+                                    class="timeline-option relative cursor-pointer bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl hover:bg-gray-200 transition duration-300 ease-in-out border border-gray-300"
+                                    data-timeline="timeless"
+                                >
+                                    <div
+                                        class="tooltip hidden absolute top-0 left-full ml-2 bg-gray-800 text-white p-2 rounded-lg text-sm z-10"
+                                    >
                                         Set your story in a timeless setting.
                                     </div>
-                                    <div class="flex items-center justify-center mb-2 text-5xl">
+                                    <div
+                                        class="flex items-center justify-center mb-2 text-5xl"
+                                    >
                                         ⏳
                                     </div>
-                                    <p class="text-center font-semibold text-gray-800">Timeless</p>
+                                    <p
+                                        class="text-center font-semibold text-gray-800"
+                                    >
+                                        Timeless
+                                    </p>
                                 </div>
                             </div>
-                            <p id="guidance-message" class="text-md text-gray-600 mb-8">
-                                Please select a location and timeline for your story.
+                            <p
+                                id="guidance-message"
+                                class="text-md text-gray-600 mb-8"
+                            >
+                                Please select a location and timeline for your
+                                story.
                             </p>
                             <a
                                 href="character_setup.html"
